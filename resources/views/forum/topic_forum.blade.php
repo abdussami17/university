@@ -15,6 +15,7 @@
 <section class="comments-feed" style="background: #f8f9fa!important;">
     <div class="forum-container mt-120">
         <div class="post-header">
+            
             <h1>{{ $post->title }}</h1>
             <div class="header-actions">
                 @auth
@@ -150,13 +151,7 @@
 </div>
 
 
-<style>
 
-.modal{
-    background-color:#00000078;
-}
-
-</style>
 
 @endsection
 @section('script')

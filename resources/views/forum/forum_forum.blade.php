@@ -5,24 +5,34 @@
 @section('content')
 
 <style>
-    main{
-        margin-top:0!important;
-    }
-    #exampleModalScrollable .card{
-            width: 100%;
-    text-align: left;
-    }
-        #exampleModalScrollable .modal-body button{
-            width: 100%!important;
-        }
-    
-            .modal-content {
-    position: relative;
-    z-index: 10000!important;
-    }
-    header{
-    z-index: 1000!important;}   
-    
+    /* BACKDROP FIX */
+.modal-backdrop.show {
+    opacity: 0.6 !important;
+}
+
+/* MODAL CENTER FIX */
+.modal {
+    z-index: 1055 !important;
+}
+
+.modal-dialog {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* CONTENT LOOK */
+.modal-content {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+/* PREVENT PAGE SHIFT ISSUES */
+body.modal-open {
+    overflow: hidden !important;
+}
 </style>
 {{--<div class="container mt-120">
     <div class="accordion" id="mainAccordion">
@@ -71,14 +81,19 @@
     </div>
 </div>--}}
 
-<section class="main-feedback-heading" style="background: #f8f9fa!important;">
-    <div class="container" style=" border-top: 3px solid rgb(1, 56, 18);">
-        <div class="header">
-            <h1>{{ trans('general.Forum_Feedback') }}</h1>
-            <div class="followers">{{ trans('general.Followers') }}:  {{ $totalFollowerCount }}</div>
-        </div>
-        <div class="mt-2">
-            <p>{{ trans('general.Share_thoughts') }}</p>
+<div class="community">
+ 
+    <!-- ── TOP BAR ── -->
+    <div class="community__topbar">
+      <div class="community__topbar-left">
+        <h1 class="community__topbar-title">{{ trans('general.Forum_Feedback') }}</h1>
+        <p class="community__topbar-sub">{{ trans('general.Followers') }}:  {{ $totalFollowerCount }}</p>
+        <p class="community__topbar-sub">Nutzen Sie diesen Raum, um Gedanken, Fragen und Vorschläge zum Forum zu teilen.</p> 
+    </div>
+
+
+            <div class="mt-2">
+            
             @if(!auth()->check())
             <a href="{{route('account.create.user.post',$cat->id)}}">
                 <button class="btn btn-primary">Neuen Beitrag erstellen</button>
@@ -91,40 +106,81 @@
                 </button> 
             @endauth
         </div>
-        
     </div>
-    <div class="container" style="padding-top: 0px;">
-        <div class="forum-list">
-            <div id="posts-container">
-            @include('forum.forum_forum_partial')
-                
-            </div>
-            <div id="pagination">
-                {{ $post->links('vendor.pagination.numbers') }}
+   
+    <!-- ── TWO-COLUMN LAYOUT ── -->
+    <div class="community__layout">
+   
+      <!-- ── FEED ── -->
+      <main class="community__feed" id="feed">
+   
+        @include('forum.forum_forum_partial')
+        <div id="pagination">
+            {{ $post->links('vendor.pagination.numbers') }}
 
 
+        </div>
+      </main>
+   
+      <!-- ── SIDEBAR ── -->
+      <aside class="community__sidebar">
+   
+        <!-- Search -->
+        <span class="community__sidebar-label">Search</span>
+        <div class="community__search" style="margin-bottom: var(--sp-8);">
+          <i  data-lucide="search" class=" community__search-icon"></i>
+          <input
+            type="text"
+            class="community__search-input"
+            placeholder="Search topics..."
+            id="sidebarSearch"
+          />
+        </div>
+   
+        <!-- Categories -->
+        <span class="community__sidebar-label">Categories</span>
+        <div class="community__categories" id="categoryPills">
+          <button class="community__cat-pill active" data-cat="all">All</button>
+          <button class="community__cat-pill" data-cat="career">career</button>
+          <button class="community__cat-pill" data-cat="studies">Studies</button>
+          <button class="community__cat-pill" data-cat="ai & tech">AI &amp; Tech</button>
+          <button class="community__cat-pill" data-cat="finances">Finances</button>
+          <button class="community__cat-pill" data-cat="lifestyle">Lifestyle</button>
+        </div>
+   
+        <!-- Trending -->
+        <span class="community__sidebar-label">Trending</span>
+        <div class="community__trending-tags">
+          <span class="community__trending-tag">Application</span>
+          <span class="community__trending-tag">Internship</span>
+          <span class="community__trending-tag">Artificial Intelligence</span>
+          <span class="community__trending-tag">Financing</span>
+          <span class="community__trending-tag">Study Abroad</span>
+        </div>
+   
+      </aside>
+    </div><!-- /.community__layout -->
+  </div><!-- /.community -->
+  <div class="modal fade custom-modal-backdrop" id="exampleModalScrollable" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+
+            <!-- Header -->
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-semibold">Beitrag erstellen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
+            <!-- Body -->
+            <div class="modal-body" id="modalPostContent">
+                <div class="text-center py-5">
+                    <div class="spinner-border text-primary"></div>
+                </div>
+            </div>
+
         </div>
     </div>
-</section>
-
-    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-hidden="true" style="    background: #00000057;">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Beitrag erstellen</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalPostContent">
-
-                    <div class="text-center py-5">
-                        <span class="spinner-border"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+</div>
 
 @endsection
 @section('script')
@@ -218,10 +274,12 @@ $(document).ready(function () {
     <script>
         $(document).ready(function() {
             $('#openPostModal').on('click', function() {
-                $('#exampleModalScrollable').modal('show');
-                $('#modalPostContent').html(
-                    '<div class="text-center py-5"><span class="spinner-border"></span></div>');
+                const modal = new bootstrap.Modal(document.getElementById('exampleModalScrollable'));
+        modal.show();
 
+        $('#modalPostContent').html(
+            '<div class="text-center py-5"><div class="spinner-border text-primary"></div></div>'
+        );
                 $.ajax({
                     url: "{{ route('account.post.create') }}",
                     type: 'GET',
@@ -269,6 +327,24 @@ $(document).ready(function () {
     font-family: "myFont5";
     border: none;
     outline: none;
+}
+.custom-modal-backdrop {
+    background: rgba(0,0,0,0.6) !important;
+    backdrop-filter: blur(3px);
+}
+
+/* better modal look */
+.modal-content {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* prevent flicker issue */
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+.modal {
+    z-index: 1050 !important;
 }
 </style>
 

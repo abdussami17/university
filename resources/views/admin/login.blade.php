@@ -1,147 +1,204 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{{--    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/account/fonts/icomoon/style.css">
-    <link rel="stylesheet" href="assets/account/css/owl.carousel.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/account/css/bootstrap.min.css">
-    <!-- Style -->
-    <link rel="stylesheet" href="assets/account/css/style.css">
-    <link rel="icon" type="image/x-icon" href="assets/account/images/logo23.png">--}}
-    
-    <link rel="icon" type="image/x-icon" href="{{asset('assets/Images/website.png')}}">
-    
-          <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="{{asset('new_asset/style/style.css')}}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/Images/website.png') }}">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+    <!-- Bootstrap Grid only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('assets/design/css/components.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/design/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/design/css/login.css') }}">
 
     <title>{{ trans('general.University') }}</title>
-  </head>
-   <body class="pt-4 pb-4">
+</head>
 
-    <div class="onboarding-wrapper bg-white p-4 rounded shadow-sm">
-        <div class="text-center mb-3">
-          <img src="https://th.bing.com/th/id/OIP.l0zv54-6oV4i-tcUSpmkAQHaHa?rs=1&pid=ImgDetMain&cb=idpwebpc2" class="rounded-img mb-2 border-1 border text-center" alt="Profile">
-          <h5 >Willkommen bei Proaiskill!</h5>
-          <p class=" mb-4" >
-            Erzähl uns ein wenig über dich, damit die KI dir ein Starter-Paket mit Inhalten,<br>
-            Finanztipps und Mentoring-Vorschlägen zusammenstellen kann.
-          </p>
+<body>
+
+    @if (Session::has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+  
+  @if (Session::has('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ Session::get('error') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+
+    <div class="login-page">
+
+ 
+
+        <!-- ── LEFT PANEL ── -->
+        <div class="login-left">
+            <!-- Logo -->
+            <div class="login-left__logo">
+                <i data-lucide="graduation-cap" style="height: 22px;width: 22px;"></i>
+                ProAISkill
+            </div>
+
+            <!-- Content -->
+            <div class="login-left__content">
+                <span class="label-tag">Member Access</span>
+                <h1 class="login-left__headline">Unlock Your Full Potential.</h1>
+                <p class="login-left__sub">
+                    Join the ProAISkill elite and get tools that will radically accelerate your studies and career.
+                </p>
+
+                <div class="login-left__features">
+                    <div class="feature-item">
+                        <div class="feature-item__icon">
+                            <i data-lucide="check" style="width:14px;height:14px;"></i>
+                        </div>
+                        AI Skill Coach (Personalized)
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-item__icon">
+                            <i data-lucide="check" style="width:14px;height:14px;"></i>
+                        </div>
+                        100+ Partner Deals & Benefits
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-item__icon">
+                            <i data-lucide="check" style="width:14px;height:14px;"></i>
+                        </div>
+                        Exclusive Lookbook & Community
+                    </div>
+                </div>
+            </div>
         </div>
-    
-        @if(Session::has('success'))
-        <div class="alert alert-success">{{Session::get('success')}}</div>
-        @endif
-        @if(Session::has('error'))
-        <div class="alert alert-danger">{{Session::get('error')}}</div>
-        @endif
-        <form id="loginForm"  action="{{route('admin.authenticate')}}" method="post">
-          @csrf
-          <div class="row g-3 mb-3">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="email">{{ trans('auth.email') }}</label>
-                    <input 
-                        type="text" 
-                        id="email" 
-                        name="email"  value="{{old('email')}}" class="form-control @error('email') is-invalid  @enderror"
-                        placeholder="{{ trans('auth.enter_email') }}"
-                        autocomplete="email"
-                    >
-                    @error('email')
-                    <div class="error" id="emailError">{{$message}}</div>
-                    @enderror
-                   
-                </div>
-                
+
+        <!-- ── RIGHT PANEL ── -->
+        <div class="login-right">
+            <div class="login-form-container">
+
+                <h1>Login</h1>
+                <p class="form-subtitle">Enter your details or use the demo access.</p>
+
+                <form id="loginForm" action="{{ route('admin.authenticate') }}" method="post">
+                    @csrf
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label class="form-label" for="email">{{ trans('auth.email') }}</label>
+                        <input type="text" id="email" name="email" value="{{ old('email') }}"
+                            class="form-control @error('email') is-invalid  @enderror"
+                            placeholder="{{ trans('auth.enter_email') }}" autocomplete="email" />
+                        @error('email')
+                            <div class="error" id="emailError">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label class="form-label" for="password">{{ trans('auth.password') }}</label>
+                        <input type="password" id="password" name="password"
+                            class="form-control @error('password') is-invalid  @enderror"
+                            placeholder="{{ trans('auth.enter_password') }}" autocomplete="current-password" />
+                        @error('password')
+                            <div class="error" id="passwordError">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <!-- Checkbox -->
+                    <div class="form-check ps-0">
+                        <input type="checkbox" id="remember" />
+                        <label for="remember">{{ trans('auth.remember_me') }}</label>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="btn btn-primary" id="loginButton"> Onboarding abschließen &
+                        Starter-Paket erhalten</button>
+
+
+                    <div class="divider"></div>
+
+                    <!-- Learning Style Section -->
+                    <span class="section-label-text">Personalization</span>
+                    <div class="section-heading">Your preferred learning style</div>
+
+                    <div class="row g-2" style="margin-bottom: 8px;">
+
+                        <div class="col-6">
+                            <div class="learning-box active" onclick="selectBox(this)">
+                                <div class="icon">
+                                    <i data-lucide="video" style="width:30px;height:30px;"></i>
+                                </div>
+                                <div class="title">Visual (videos)</div>
+                                <div class="text-muted small">Learning through dynamic explanations</div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="learning-box" onclick="selectBox(this)">
+                                <div class="icon">
+                                    <i data-lucide="book-open" style="width:30px;height:30px;"></i>
+                                </div>
+                                <div class="title">Text-based</div>
+                                <div class="text-muted small">Learning through reading and understanding</div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="learning-box" onclick="selectBox(this)">
+                                <div class="icon">
+                                    <i data-lucide="brain" style="width:30px;height:30px;"></i>
+                                </div>
+                                <div class="title">Interactive<br>(exercises)</div>
+                                <div class="text-muted small">Learning through active<br>application</div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="learning-box" onclick="selectBox(this)">
+                                <div class="icon">
+                                    <i data-lucide="rocket" style="width:30px;height:30px;"></i>
+                                </div>
+                                <div class="title">Fast Track<br>(Efficiency)</div>
+                                <div class="text-muted small">Learning for the<br>turbo boost</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </form>
+
+
+
+                <a href="{{ route('home') }}" class="skip-link">
+                    <i data-lucide="arrow-left" style="width:14px;height:14px;"></i>
+                    <span>Zurück zur Startseite (Überspringen)</span>
+                </a>
+
             </div>
-            <div class="col-md-6">
+        </div>
 
+    </div>
 
-            <div class="form-group">
-                <label for="password">{{ trans('auth.password') }}</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    class="form-control @error('password') is-invalid  @enderror"
-                    placeholder="{{ trans('auth.enter_password') }}"
-                    autocomplete="current-password"
-                >
-                @error('password')
-                <div class="error" id="passwordError">{{$message}}</div>
-                @enderror
-            </div>
-            
-            </div>
-            
-            
-                          <div class="mb-4">
-            <label class="form-label">Dein bevorzugter Lernstil</label>
-            <div class="row g-2">
-              <div class="col-6 col-md-3">
-                <div class="learning-box active" onclick="selectBox(this)">
-                  <div class="icon">
-                    <i class="fa-solid fa-camera"></i>
-                  </div>
-                  <div class="title">Visuell (Videos)</div>
-                  <div class="text-muted small">Lernen durch dynamische Erklärungen</div>
-                </div>
-              </div>
-              <div class="col-6 col-md-3">
-                <div class="learning-box" onclick="selectBox(this)">
-                  <div class="icon">
-                    <i class="fa-solid fa-book-open"></i>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assets/design/js/main.js') }}"></script>
 
-                  </div>
-                  <div class="title">Textbasiert</div>
-                  <div class="text-muted small">Lernen durch Lesen und Verstehen</div>
-                </div>
-              </div>
-              <div class="col-6 col-md-3">
-                <div class="learning-box" onclick="selectBox(this)">
-                  <div class="icon">
-                    <i class="fa-solid fa-brain"></i>
-                  </div>
-                  <div class=" title">Interaktiv<br>
-                    (Übungen)</div>
-                  <div class="text-muted small"> Lernen durch aktives<br>
-                    Anwenden</div>
-                </div>
-              </div>
-              <div class="col-6 col-md-3">
-                <div class="learning-box" onclick="selectBox(this)">
-                  <div class="icon">
-                    <i class="fa-solid fa-rocket"></i>
-                  </div>
-                  <div class=" title">Fast Track<br> (Effizienz) </div>
-                  <div class="text-muted small">Lernen für den<br>
-                    Turbo-Boost</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-            <button type="submit" class="btn onboard-button w-100 mb-0" id="loginButton">
-                Onboarding abschließen & Starter-Paket erhalten
-            </button>
-
-        <a href="{{route('home')}}">
-        <button class="btn Zurück-btn hover-greeen w-100 mb-0">← Zurück zur Startseite (Überspringen)</button>            
-        </a>
-        
-        </form>
-
-        
-      </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

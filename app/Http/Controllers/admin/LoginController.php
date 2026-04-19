@@ -15,31 +15,42 @@ class LoginController extends Controller
   }
 
 //this authenticate admin
-  public function authenticate(Request $req){
-    $validator = Validator::make($req->all(),[
+public function authenticate(Request $req)
+{
+    $validator = Validator::make($req->all(), [
         'email' => 'required|email',
         'password' => 'required'
+    ], [
+        'email.required' => 'E-Mail ist erforderlich.',
+        'email.email' => 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+        'password.required' => 'Passwort ist erforderlich.',
+    ]);
 
-            ]);
-    if($validator->passes()){   
+    if ($validator->passes()) {
 
-        if(Auth::guard('admin')->attempt(['email'=>$req->email,'password'=>$req->password])){
+        if (Auth::guard('admin')->attempt([
+            'email' => $req->email,
+            'password' => $req->password
+        ])) {
 
-            if(Auth::guard('admin')->user()->role != 'admin'){
+            if (Auth::guard('admin')->user()->role != 'admin') {
                 Auth::guard('admin')->logout();
-                return redirect()->route('admin.login')->with('error', __('messages.not_authorized'));
-            }else{
-                return redirect()->route('admin.dashboard'); 
+                return redirect()->route('admin.login')
+                    ->with('error', 'Sie sind nicht berechtigt, auf diese Seite zuzugreifen.');
+            } else {
+                return redirect()->route('admin.dashboard');
             }
-        
-        }else{
-            return redirect()->route('admin.login')->with('error', __('messages.email_or_password_not_correct'));
+
+        } else {
+            return redirect()->route('admin.login')
+                ->withInput()
+                ->with('error', 'E-Mail oder Passwort ist falsch.');
         }
 
-    }else{
+    } else {
         return redirect()->route('admin.login')
-        ->withInput()
-        ->withErrors($validator);
+            ->withInput()
+            ->withErrors($validator);
     }
 }
 

@@ -3,102 +3,143 @@
 @section('title', trans('general.Forum_University_Community'))
 
 @section('content')
-    <style>
-        body {
-            background: #f8f9fa;
-        }
-    </style>
-    <style>
-        main {
-            margin-top: 0 !important;
-        }
-    </style>
-    <div class="container">
-        <h1 class="title">{{ trans('general.Forums') }}</h1>
-        <div class="accordion" id="mainAccordion">
-            @foreach (App\Models\Category::where('parent_id', 0)->where('status', 1)->with('child')->get() as $category)
-                @php
-                    $activeSubcategories = $category->child->where('status', 1);
-                @endphp
-                @if ($activeSubcategories)
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button {{ $loop->first ? '' : 'collapsed' }}" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#collapse{{ $category->id }}">
-                                {{ $category->name }}
-                            </button>
-                        </h2>
-                        <div id="collapse{{ $category->id }}"
-                            class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}"
-                            data-bs-parent="#mainAccordion">
-                            <div class="accordion-body">
-                                <div class="group-card">
-
-                                    @if ($activeSubcategories->count() > 0)
-                                        @foreach ($activeSubcategories as $subcategory)
-                                            @if ($subcategory->status == 1)
-                                                @php
-                                                    // Get IDs of posts and userposts under this subcategory
-                                                    $postIds = \App\Models\Post::where('parent_id', $subcategory->id)
-                                                        ->pluck('id')
-                                                        ->toArray();
-                                                    $userPostIds = \App\Models\userpost::where(
-                                                        'parent_id',
-                                                        $subcategory->id,
-                                                    )
-                                                        ->pluck('id')
-                                                        ->toArray();
-
-                                                    $allPostIds = array_merge($postIds, $userPostIds);
-
-                                                    // Count followers for these posts/user_posts
-                                                    $followerCount = \App\Models\Follower::whereIn(
-                                                        'user_post_id',
-                                                        $allPostIds,
-                                                    )->count();
-
-                                                    $adminPostCount = count($postIds);
-                                                    $userPostCount = count($userPostIds);
-
-                                                    $totalcountnew = $adminPostCount + $userPostCount;
-                                                    $totalPostCount = $adminPostCount + $userPostCount;
-                                                @endphp
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/design/css/trends.css') }}">
+@endpush
 
 
 
-                                                <div class="card">
-                                                    <img src="{{ asset($subcategory->thumb) }}"
-                                                        alt="{{ $subcategory->name }}">
-                                                    <div class="card-content">
-                                                        <div class="card-title"
-                                                            onclick="window.location='{{ route('forum.forum.web', $subcategory->slug) }}'">
-                                                            {!! $subcategory->name !!}</div>
-                                                        <div class="stats">{{ number_format($totalPostCount) }}
-                                                            {{ trans('general.Posts') }} / {{ $followerCount }}
-                                                            {{ trans('general.Followers') }}</div>
-                                                        <div class="description">
-                                                            {!! $subcategory->short_desc !!}
-                                                        </div>
-                                                        <div class="highlight">
-                                                            <span>{{ trans('general.Highlight') }}?</span><br>
-                                                            {{ trans('general.Last_Reply') }}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        <p>{{ trans('general.No_Subcategories_Available') }}</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-            @endforeach
 
+    <!-- ══ SECTION 1: TRENDS & VIBES HERO ══ -->
+<section class="trends-vibes-hero-section">
+    <div class="container-lg">
+  
+        <span class="trends-vibes-hero-discovery-badge">Entdeckungsplattform</span>
+  
+      <h1 class="trends-vibes-hero-headline">{{ trans('general.Forums') }}</h1>
+  
+      <p class="trends-vibes-hero-subtext">
+        Dein Radar für Lifestyle, Kultur und alles, was dein<br>
+        Studium über die Bücher hinaus ausmacht.
+      </p>
+  
+      <div class="trends-vibes-hero-search-wrapper">
+        <div class="trends-vibes-hero-search-box">
+          <svg class="trends-vibes-hero-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="text"
+            class="trends-vibes-hero-search-input"
+            placeholder="Search..."
+            autocomplete="off"
+          />
         </div>
+      </div>
+  
+      <div class="trends-vibes-hero-quick-links">
+        <a href="#" class="trends-vibes-hero-quick-link-btn">
+          <svg class="trends-vibes-hero-quick-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+          </svg>
+          Campus-Playlists
+        </a>
+      
+        <a href="#" class="trends-vibes-hero-quick-link-btn">
+          <svg class="trends-vibes-hero-quick-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          Lookbook '26
+        </a>
+      
+        <a href="#" class="trends-vibes-hero-quick-link-btn">
+          <svg class="trends-vibes-hero-quick-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          Lokale Hotspots
+        </a>
+      
+        <a href="#" class="trends-vibes-hero-quick-link-btn">
+          <svg class="trends-vibes-hero-quick-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          Alltagstipps
+        </a>
+      </div>
+  
     </div>
+  </section>
+  
+  <!-- ══ SECTION 2: CURRENT RADAR ══ -->
+  <section class="current-radar-section">
+    <div class="container-xl">
+  
+      <div class="current-radar-section-header">
+        <h2 class="current-radar-section-title">Current Radar</h2>
+        <span class="current-radar-section-edition"></span>
+      </div>
+  
+      <div class="current-radar-cards-grid">
 
+        @foreach (App\Models\Category::where('parent_id', 0)->where('status', 1)->with('child')->get() as $category)
+        
+            @php
+                $activeSubcategories = $category->child->where('status', 1);
+            @endphp
+        
+            @foreach ($activeSubcategories as $subcategory)
+        
+                @php
+                    $adminPostCount = \App\Models\Post::where('parent_id', $subcategory->id)->count();
+                    $userPostCount  = \App\Models\UserPost::where('parent_id', $subcategory->id)->count();
+                    $totalPostCount = $adminPostCount + $userPostCount;
+        
+                    $postIds = \App\Models\Post::where('parent_id', $subcategory->id)->pluck('id');
+                    $userPostIds = \App\Models\UserPost::where('parent_id', $subcategory->id)->pluck('id');
+        
+                    $followerCount = \App\Models\Follower::whereIn(
+                        'user_post_id',
+                        $postIds->merge($userPostIds)
+                    )->count();
+                @endphp
+        
+                <div class="current-radar-article-card">
+        
+                    <div class="current-radar-article-card-image-wrapper">
+                        <img src="{{ asset($subcategory->thumb) }}" class="current-radar-article-card-image">
+        
+                        <span class="current-radar-article-card-category-tag">
+                            {{ $category->name }}
+                        </span>
+                    </div>
+        
+                    <h3 class="current-radar-article-card-title">
+                        {!! $subcategory->name !!}
+                    </h3>
+        
+                    <p class="current-radar-article-card-excerpt">
+                        {!! \Illuminate\Support\Str::limit(strip_tags($subcategory->short_desc), 100) !!}
+                    </p>
+        
+                    <div class="current-radar-article-card-hashtags">
+                        <span class="jd-benefit-tag">#{{ number_format($totalPostCount) }} {{ trans('general.Posts') }}</span>
+                        <span class="jd-benefit-tag">#{{ $followerCount }} {{ trans('general.Followers') }}</span>
+                    </div>
+        
+                    <a href="{{ route('forum.forum.web', $subcategory->slug) }}"
+                       class="current-radar-article-card-learn-more">
+                       Mehr erfahren
+                       <i data-lucide="arrow-right"></i>
+                    </a>
+        
+                </div>
+        
+            @endforeach
+        
+        @endforeach
+        
+        </div>
+  </section>
 
 @endsection

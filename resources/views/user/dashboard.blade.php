@@ -276,7 +276,8 @@
               <!-- Left Card -->
               <div class="col-lg-8 pop-up">
                 <div class="card card-shadow p-4" style=" 
-                border-left: 4px solid #0d6dfd9d;">
+                border-left: 4px solid 
+#4f46e5;">
                   <h5 style="  color: rgb(56, 59, 66);" class="mb-1"><i class="fa-regular me-2 fa-lightbulb"></i> Dein Fokus für heute</h5>
                   <p class="text-muted">Hier sind ein paar Vorschläge von dem K-Coach</p>
 

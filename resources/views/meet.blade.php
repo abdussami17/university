@@ -3,63 +3,122 @@
 @section('title', trans('general.Forum_University_Community'))
 
 @section('content')
-    <style>
-        body {
-            background: #f8f9fa;
-        }
-    </style>
-    <style>
-        main {
-            margin-top: 0 !important;
-        }
-    </style>
-    <div class="container">
-        <h1 class="title">{{ trans('general.Forums') }}</h1>
-        <div class="accordion" id="mainAccordion">
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/design/css/trends.css') }}">
+@endpush
 
 
+<!-- ══ SECTION 1: TRENDS & VIBES HERO ══ -->
+<section class="trends-vibes-hero-section">
+  <div class="container-lg">
 
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button " type="button"
-                                data-bs-toggle="collapse" data-bs-target="#collapse">
-                               Treffen List
-                            </button>
-                        </h2>
-                        <div id="collapse"
-                            class="accordion-collapse collapse show"
-                            data-bs-parent="#mainAccordion">
-                            <div class="accordion-body">
-                                <div class="group-card">
+    <span class="trends-vibes-hero-discovery-badge">Entdeckungsplattform</span>
 
-        
-                                            @foreach (App\Models\meet::where('parent_id', 0)->with('child')->get() as $category)
+    <h1 class="trends-vibes-hero-headline">{{ trans('general.Forums') }}</h1>
 
+    <p class="trends-vibes-hero-subtext">
+      Dein Radar für Lifestyle, Kultur und alles, was dein<br>
+      Studium über die Bücher hinaus ausmacht.
+    </p>
 
-@php
-    $slug = \Str::slug($category->name);
-@endphp                                                <div class="card">
-                                                    <img src="{{ asset($category->image) }}"
-                                                        alt="{{ $category->name }}">
-                                                    <div class="card-content">
-                                                        <div class="card-title"
-                                                            onclick="window.location='{{route('account.meet.category',$slug)}}'">
-                                                            {!! $category->name !!}</div>
-                                                        <div class="description">
-                                                            {!! $category->description !!}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="trends-vibes-hero-search-wrapper">
+      <div class="trends-vibes-hero-search-box">
+        <svg class="trends-vibes-hero-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
 
-            
-
-        </div>
+        <input type="text" class="trends-vibes-hero-search-input" placeholder="Search..." autocomplete="off"/>
+      </div>
     </div>
 
+    <div class="trends-vibes-hero-quick-links">
+      <a href="#" class="trends-vibes-hero-quick-link-btn">
+        <svg class="trends-vibes-hero-quick-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+        Campus-Playlists
+      </a>
+
+      <a href="#" class="trends-vibes-hero-quick-link-btn">
+        <svg class="trends-vibes-hero-quick-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        Lookbook '26
+      </a>
+
+      <a href="#" class="trends-vibes-hero-quick-link-btn">
+        <svg class="trends-vibes-hero-quick-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Lokale Hotspots
+      </a>
+
+      <a href="#" class="trends-vibes-hero-quick-link-btn">
+        <svg class="trends-vibes-hero-quick-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        Alltagstipps
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SECTION 2: CURRENT RADAR ══ -->
+<section class="current-radar-section">
+  <div class="container-xl">
+
+    <div class="current-radar-section-header">
+      <h2 class="current-radar-section-title">Current Radar</h2>
+      <span class="current-radar-section-edition"></span>
+    </div>
+
+    <div class="current-radar-cards-grid">
+
+      @foreach (App\Models\meet::where('parent_id', 0)->with('child')->get() as $category)
+
+        @php
+          $slug = \Illuminate\Support\Str::slug($category->name);
+        @endphp
+
+        <div class="current-radar-article-card">
+
+          <div class="current-radar-article-card-image-wrapper">
+            <img src="{{ asset($category->image) }}" class="current-radar-article-card-image">
+
+            <span class="current-radar-article-card-category-tag">
+              {{ $category->name }}
+            </span>
+          </div>
+
+          <h3 class="current-radar-article-card-title">
+            {{ $category->name }}
+          </h3>
+
+          <p class="current-radar-article-card-excerpt">
+            {{ \Illuminate\Support\Str::limit(strip_tags($category->description), 100) }}
+          </p>
+
+          <a href="{{ route('account.meet.category', $slug) }}"
+             class="current-radar-article-card-learn-more">
+            Mehr erfahren
+            <i data-lucide="arrow-right"></i>
+          </a>
+
+        </div>
+
+      @endforeach
+
+    </div>
+
+  </div>
+</section>
 
 @endsection

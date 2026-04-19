@@ -437,23 +437,24 @@ font-weight: 600;
   }
 
   .xp-box {
-    background: #f0f8ff;
+    /* background: #f0f8ff; */
     /* border-left: 4px solid #0d6efd; */
   }
 
   .xp-box h2  , .xp-box h5 , .xp-box p{
-    color: #0d6efd;
+    color: #4f46e5;
   
   }
   .alert-info{
-    background-color: #f0f8ff !important;
+    background-color: 
+    #4f46e5 !important;
     /* border: none; */
     border-color: #ccc;
    display: flex;
    gap: 10px; 
   }
   .alert-info{
-    color: #000;
+    color: #fff;
   }
 
   .profile-links {
@@ -564,7 +565,8 @@ font-weight: 600;
   }
   .community-box {
     background: #fff;
-    border-left: 3px solid #ffc107;
+    border-left: 3px solid 
+    #4f46e5;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
