@@ -1,5 +1,5 @@
 
-    <header class="navbar" role="banner">
+    <header class="navbars" role="banner">
         <div class="navbar__inner">
     
           <!-- Left: Search + User -->
@@ -89,33 +89,31 @@
                 <nav class="navbar__nav" role="navigation" aria-label="Main Navigation">
                   <ul class="navbar__nav-list">
                 
-                    <li class="navbar__nav-item {{ request()->routeIs('workshops') ? 'active' : '' }}">
-                      <a href="{{ route('workshops') }}">{{ trans('general.Workshops') }}</a>
+                    <li class="navbar__nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
+                      <a href="/">NACHRICHTEN</a>
+                    </li>
+                    <li class="navbar__nav-item {{ request()->routeIs('career.web') ? 'active' : '' }}">
+                      <a href="{{ route('career.web') }}">STELLENANGEBOTE</a>
+                    </li>
+                    <li class="navbar__nav-item {{ request()->routeIs('marketplace.index') ? 'active' : '' }}">
+                      <a href="{{ route('marketplace.index') }}">MARKETPLACE</a>
                     </li>
                 
-                    <li class="navbar__nav-item {{ request()->routeIs('travel-mobility') ? 'active' : '' }}">
-                      <a href="{{ route('travel-mobility') }}">{{ trans('general.Travel_Mobility') }}</a>
-                    </li>
-                
-                    <li class="navbar__nav-item {{ request()->routeIs('affiliate-programs') ? 'active' : '' }}">
-                      <a href="{{ route('affiliate-programs') }}">{{ trans('general.Affiliate_Programs') }}</a>
-                    </li>
+
                 
                     <li class="navbar__nav-item {{ request()->routeIs('forum.web') ? 'active' : '' }}">
-                      <a href="{{ route('forum.web') }}">{{ trans('general.Forum') }}</a>
+                      <a href="{{ route('forum.web') }}">TRENDS</a>
                     </li>
                 
-                    <li class="navbar__nav-item {{ request()->routeIs('career.web') ? 'active' : '' }}">
-                      <a href="{{ route('career.web') }}">{{ trans('general.Career_Jobs') }}</a>
-                    </li>
                 
-                    <li class="navbar__nav-item {{ request()->routeIs('account.meet') ? 'active' : '' }}">
+                
+                    {{-- <li class="navbar__nav-item {{ request()->routeIs('account.meet') ? 'active' : '' }}">
                       <a href="{{ route('account.meet') }}">Treffen</a>
-                    </li>
+                    </li> --}}
                 
-                    <li class="navbar__nav-item {{ request()->is('/') ? 'active' : '' }}">
+                    {{-- <li class="navbar__nav-item {{ request()->is('/') ? 'active' : '' }}">
                       <a href="/">{{ trans('general.AI_Integration') }}</a>
-                    </li>
+                    </li> --}}
                 
                   </ul>
                 </nav>
@@ -128,12 +126,21 @@
       <nav class="mobile-menu" role="navigation" aria-label="Mobile Navigation">
         <ul>
  
-            <li class="mobile-menu__item"><a href="{{route('workshops')}}">{{ trans('general.Workshops') }}</a></li>
-            <li class="mobile-menu__item"><a href="{{route('travel-mobility')}}">{{ trans('general.Travel_Mobility') }}</a></li>
-            <li class="mobile-menu__item"><a href="{{route('affiliate-programs')}}">{{ trans('general.Affiliate_Programs') }}</a></li>
-            <li class="mobile-menu__item"><a href="{{route('forum.web')}}">{{ trans('general.Forum') }}</a></li>
-            <li class="mobile-menu__item"><a href="{{route('career.web')}}">{{ trans('general.Career_Jobs') }}</a></li>
-            <li class="mobile-menu__item"><a href="{{ route('account.meet')}}">Treffen</a></li>
-            <li class="mobile-menu__item"><a href="/">{{ trans('general.AI_Integration') }}</a></li>
+                      <li class="mobile-menu__item {{ request()->routeIs('workshops') ? 'active' : '' }}">
+                      <a href="/">NACHRICHTEN</a>
+                    </li>
+                    <li class="mobile-menu__item {{ request()->routeIs('career.web') ? 'active' : '' }}">
+                      <a href="{{ route('career.web') }}">STELLENANGEBOTE</a>
+                    </li>
+                    <li class="mobile-menu__item {{ request()->routeIs('marketplace.index') ? 'active' : '' }}">
+                      <a href="{{ route('marketplace.index') }}">MARKETPLACE</a>
+                    </li>
+                
+
+                
+                    <li class="mobile-menu__item {{ request()->routeIs('forum.web') ? 'active' : '' }}">
+                      <a href="{{ route('forum.web') }}">TRENDS</a>
+                    </li>
+                
         </ul>
       </nav>

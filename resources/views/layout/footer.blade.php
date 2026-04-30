@@ -1,4 +1,4 @@
-<footer class="footer-parent" style="background: var(--color-dark); color: var(--color-muted); padding: 3rem 0; margin-top: 0;">
+{{-- <footer class="footer-parent" style="background: var(--color-dark); color: var(--color-muted); padding: 3rem 0; margin-top: 0;">
 
     @php
     if (!function_exists('get_setting')) {
@@ -106,4 +106,60 @@
     
     </div>
     
+    </footer> --}}
+
+    <footer class="w-100" style="background:#fff;border-top:1px solid #e5e7eb;">
+      <div class="container-fluid" style="padding:30px 40px;">
+        
+        <!-- DESKTOP -->
+        <div class="d-none d-md-flex" style="position:relative;align-items:center;justify-content:space-between;">
+    
+          <!-- LEFT -->
+          <div style="display:flex;align-items:center;gap:8px;min-width:180px;">
+            <i data-lucide="graduation-cap" style="width:28px;height:28px;color:#4f46e5;"></i>
+            <span style="font-weight:700;font-size:18px;color:#111827;">
+              ProAISkill
+            </span>
+          </div>
+    
+          <!-- CENTER -->
+          <div style="position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;">
+            <p style="margin:0;font-size:13px;color:#6b7280;">
+              ProAISkill helps students complete their studies more efficiently and get a better start in their careers. This is a UI prototype.
+            </p>
+          </div>
+    
+          <!-- RIGHT -->
+          <div style="display:flex;align-items:center;gap:20px;justify-content:flex-end;min-width:180px;">
+            <a href="#" style="font-size:13px;color:#374151;text-decoration:none;">imprint</a>
+            <a href="#" style="font-size:13px;color:#374151;text-decoration:none;">Data protection</a>
+          </div>
+    
+        </div>
+    
+        <!-- MOBILE / TABLET -->
+        <div class="d-flex d-md-none flex-column align-items-center text-center" style="gap:6px;">
+    
+          <!-- LOGO -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i data-lucide="graduation-cap" style="width:26px;height:26px;color:#4f46e5;"></i>
+            <span style="font-weight:700;font-size:16px;color:#111827;">
+              ProAISkill
+            </span>
+          </div>
+    
+          <!-- TEXT -->
+          <p style="margin:0;font-size:12px;color:#6b7280;line-height:1.4;">
+            ProAISkill helps students complete their studies more efficiently and get a better start in their careers. This is a UI prototype.
+          </p>
+    
+          <!-- LINKS -->
+          <div style="display:flex;gap:15px;">
+            <a href="#" style="font-size:12px;color:#374151;text-decoration:none;">imprint</a>
+            <a href="#" style="font-size:12px;color:#374151;text-decoration:none;">Data protection</a>
+          </div>
+    
+        </div>
+    
+      </div>
     </footer>

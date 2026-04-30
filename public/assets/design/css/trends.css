@@ -175,7 +175,7 @@
     height: 200px;
     object-fit: cover;
     display: block;
-    filter: grayscale(100%) brightness(0.88);
+    /* filter: grayscale(100%) brightness(0.88); */
   }
   
   .current-radar-article-card-category-tag {

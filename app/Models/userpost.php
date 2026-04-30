@@ -1,14 +1,17 @@
-<?php
+    <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
 
-class userpost extends Model
-{
-    /** @use HasFactory<\Database\Factories\UserpostFactory> */
-    use HasFactory;
-    protected $fillable = ['title', 'slug', 'views']; // include 'views'
-
-}
+    class userpost extends Model
+    {
+        /** @use HasFactory<\Database\Factories\UserpostFactory> */
+        use HasFactory;
+        protected $fillable = ['title', 'slug', 'views']; // include 'views'
+        public function child()
+        {
+            return $this->hasMany(userpost::class, 'parent_id');
+        }
+    }

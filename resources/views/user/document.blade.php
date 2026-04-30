@@ -1,615 +1,493 @@
 @extends('user.layout')
 @section('title', trans('general.AI_Features'))
 @section('content')
-    <div class="main-section">
-        <div class="mb-4">
-            <h4 style="  color: rgb(56, 59, 66);" class="mb-1">KI Dokumentenassistent</h4>
-            <p class="text-muted mb-0">Verbessere, erstelle und analysiere deine Dokumente mit KI-Power.</p>
-        </div>
 
-        <!-- Top Tabs -->
-        <div class="top-tabs">
+  <!-- ══════════════════════════════ MAIN ══════════════════════════════ -->
+  <div class="sdapp-main-wrapper">
+    <div class="sdapp-page-content">
 
-            <button class="tab-button active" onclick="switchTab(0)"><i class="bi bi-upc-scan me-1"></i> {{ trans('general.Document_Scanner') }}</button>
+      <!-- Page header -->
+      <div class="sdapp-page-header">
+        <h1 class="sdapp-page-header__title">Dokumenten-KI</h1>
+        <p class="sdapp-page-header__subtitle">Lass die KI für dich arbeiten: Erstelle mühelos Bewerbungen oder erhalte Feedback für deine Hausarbeiten.</p>
+      </div>
 
-            <button class="tab-button" onclick="switchTab(1)"><i class="bi bi-file-earmark-plus me-1"></i>CV-Generator</button>
-            <button class="tab-button" onclick="switchTab(2)"><i class="bi bi-upc-scan me-1"></i> Analysieren &amp;
-                Exportieren</button>
-            <button class="tab-button" onclick="switchTab(3)"><i class="bi bi-check2-square me-1"></i> Dokument
-                verbessern</button>                
+      <!-- Tabs -->
+      <div class="sdapp-doc-tabs-wrapper sdapp-doc-tabs">
+        <ul class="nav nav-tabs" id="docTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="bewerbung-tab" data-bs-toggle="tab" data-bs-target="#bewerbung" type="button" role="tab">Bewerbung</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="lebenslauf-tab" data-bs-toggle="tab" data-bs-target="#lebenslauf" type="button" role="tab">Lebenslauf</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="anschreiben-tab" data-bs-toggle="tab" data-bs-target="#anschreiben" type="button" role="tab">Anschreiben</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="hausarbeit-tab" data-bs-toggle="tab" data-bs-target="#hausarbeit" type="button" role="tab">Hausarbeit</button>
+          </li>
+        </ul>
 
-                
-                
-        </div>
+        <div class="tab-content" id="docTabsContent">
 
-        <!-- Dynamic Tab Content -->
-        <div class="card-section">
+          <!-- ── Tab: Bewerbung ── -->
+          <div class="tab-pane fade show active" id="bewerbung" role="tabpanel">
 
-            <div id="tab-0" class="card tab-card p-4 shadow-sm">
-                <div class="">
-                    <h3>{{ trans('general.AI_Powered_Document_Processing') }}</h3>
-                    <label class="form-label">{{ trans('general.Upload_Document') }}</label>
-                    <input type="file" class="form-control" id="docInput" accept="application/pdf">
-
-                    <div id="previewContainer" class="mt-3 d-none">
-                        <h5>{{ trans('general.Document_Preview') }}:</h5>
-                        <img id="imagePreview" class="img-fluid border p-2" style="max-height: 200px; display: none;">
-                        <iframe id="pdfPreview" class="w-100 border p-2" style="height: 250px; display: none;"></iframe>
-                    </div>
-
-                    <button class="btn btn-success mt-3" id="processBtn" disabled>{{ trans('general.Extract_Text') }}</button>
-
-                    <button class="btn btn-primary w-100 d-none" type="button" disabled id="loader-button">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        {{ trans('general.Loading') }}
-                    </button>
-
-                    <div class="mt-3">
-                        <h5>{{ trans('general.Extracted_Text') }}:</h5>
-                        <textarea class="form-control" id="extractedText" rows="5" readonly></textarea>
-                    </div>
-                </div>
-            </div>
-            
-            
-            <!-- Tab 2 -->
-<div class="card tab-card p-4 shadow-sm d-none" id="tab-1">
-    <h5><strong><i class="fa-brands fa-react me-2"></i> Lebenslauf/Motivationsschreiben erstellen</strong></h5>
-    <p class="text-muted small">Gib Auftragdetails und deine informationen an, um mabgeschneiderte Dokumente zu erstellen.</p>
-    <img src="{{ asset('new_asset/images/abcd.png') }}" height="130px" width="100px" alt="Image">
-
-    <div class="row">
-        <div class="col-md-6">
-            <textarea style="min-height:120px !important;background-color: rgba(237, 242, 245, 0.331);" 
-                class="form-control border-0" placeholder="Stellenbeschreibung hier einfügen.."></textarea>
-        </div>
-        <div class="col-md-6">
-            <textarea style="min-height:120px !important;background-color: rgba(237, 242, 245, 0.331);" 
-                class="form-control border-0" placeholder="Deine Fähigkeiten, Erfahrungen und relevante Projekte.."></textarea>
-        </div>
-    </div>
-
-    <textarea style="background-color: rgba(237, 242, 245, 0.331);" 
-        class="form-control border-0 mt-4" placeholder="Über sich selbst, Ziele, Hobbys und andere
-"></textarea>
-
-    <button class="btn btn-primary w-25 mt-3 fw-medium">Dokumente erstellen</button>
-
-    <div class="d-block gap-2 mt-2">
-        <div class="card mt-2 p-3 col-md-6">
-            <h6 class="mb-1 fw-semibold">Erstellter Lebenslauf:</h6>
-            <p class="small text-muted mb-0">Dein Lebenslauf wird hier erscheinen..</p>
-        </div>
-        <div class="card mt-2 p-3 col-md-6">
-            <h6 class="mb-1 fw-semibold">Erstelltes Motivationsschreiben :</h6>
-            <p class="small text-muted mb-0">Dein Schreiben wird hier erscheinen..</p>
-        </div>
-    </div>
-    <div class="exports-btn">
-                        <button class="btn rounded-3"><i class="bi bi-file-earmark me-1"></i> Als PDF exportieren</button>
-                    
-
-                    </div>
-</div>
-
-            <!-- Tab 3 -->
-            <div class="card tab-card p-4 shadow-sm d-none" id="tab-2">
-                <h5><strong><i class="bi bi-upc-scan me-2"></i>Plagiat-Checker &amp; Export</strong></h5>
-                <p class="text-muted small">Uberprufe dein Dokument auf Plagiate und exportiere es in verschiedene Formate.
-                </p>
-                <img src="{{ asset('new_asset/images/abcd.png') }}" height="130px" width="100px" alt="Image">
-                <label for="tone1" class="form-label">Dokument fur Plagiat-Check:</label>
-                <textarea style="background-color: rgba(237, 242, 245, 0.331);" class="form-control border-0"
-                    placeholder="Fuge hier den text fur den Plagiat-Check ein..."></textarea>
-
-
-                <button class="btn btn-primary mt-3 w-25 fw-medium">Auf Plagiate prufen</button>
-                <div class="card mt-3 p-3">
-                    <h6 class="mb-1 fw-semibold">Plagiat-Scan Ergebnis:</h6>
-                    <p class="small text-muted mb-0">Ergebnis des Plagiat-Checks wird hier angezeigt....</p>
-                </div>
-                <div class="card mt-3 p-3">
-                    <h6 class="mb-1 fw-semibold">Exportoptionen:</h6>
-                    <div class="exports-btn">
-                        <button class="btn rounded-3"><i class="bi bi-file-earmark me-1"></i> Als PDF exportieren</button>
-                        <button class="btn rounded-3"><i class="bi bi-file-earmark me-1"></i> Als Word-Datei exportieren
-                        </button>
-                        <button class="btn rounded-3"><i class="bi bi-share-fill me-1"></i> Als Word-Datei exportieren
-                        </button>
-
-
-                    </div>
-                </div>
+            {{-- Drop zone --}}
+            <div class="sdapp-doc-dropzone" id="dropzone-bewerbung" onclick="document.getElementById('sdapp-upload-bewerbung').click();">
+              <div class="sdapp-doc-dropzone__icon">
+                <i data-lucide="cloud-upload" width="40" height="40"></i>
+              </div>
+              <div class="sdapp-doc-dropzone__title">{{ trans('general.AI_Powered_Document_Processing') }}</div>
+              <div class="sdapp-doc-dropzone__subtitle">{{ trans('general.Upload_Document') }}</div>
+              <button class="sdapp-btn sdapp-btn--outline" type="button">Datei auswählen</button>
+              <input type="file" id="sdapp-upload-bewerbung" style="display:none;" accept="application/pdf" />
             </div>
 
-
-            <!-- Tab 3 -->
-            <div class="card tab-card p-4 shadow-sm d-none" id="tab-3">
-                <h5><strong><i class="fa-brands fa-react me-2"></i> Dokument verbessern</strong></h5>
-                <p class="text-muted small">Füge deinen Text unten ein, um Grammatik, Rechtschreibung und Stil zu
-                    verbessern. Wähle optional einen Zielton.</p>
-                <img src="{{ asset('new_asset/images/abcd.png') }}" height="130px" width="100px" alt="Image">
-                <textarea style="background-color: rgba(237, 242, 245, 0.331);" class="form-control border-0"
-                    placeholder="Füge deinen Dokumenttext hier ein..."></textarea>
-                <label for="tone1" class="form-label">Gewünschter Ton (optional):</label>
-                <select class="form-select w-25" id="tone1">
-                    <option>Standard verbessern</option>
-                    <option>Professionell&amp; Formell</option>
-                    <option>Freundlich &amp; Zuganglich</option>
-                    <option>Uberzeugend &amp; Stark</option>
-                    <option>Kurz &amp; Pragnant</option>
-                    <option>Enthusiastisch &amp; Motivierrend</option>
-
-
-
-                </select>
-                <button class="btn btn-primary w-25 fw-medium">Analysieren und Verbessern</button>
-                <div class="card mt-3 p-3">
-                    <h6 class="mb-1 fw-semibold">Verbessertes Dokument:</h6>
-                    <p class="small text-muted mb-0">Dein verbessern Text wird hier erscheinen.</p>
-                </div>
+            {{-- Preview (hidden until file chosen) --}}
+            <div id="previewContainer-bewerbung" class="mt-3 mb-3 d-none">
+              <h6>{{ trans('general.Document_Preview') }}:</h6>
+              <img id="imagePreview-bewerbung" class="img-fluid border p-2" style="max-height:200px;display:none;" alt="preview">
+              <iframe id="pdfPreview-bewerbung" class="w-100 border p-2" style="height:250px;display:none;"></iframe>
             </div>
 
-        </div>
+            {{-- Extract button --}}
+            <button class="sdapp-btn sdapp-btn--primary sdapp-doc-generate-btn" id="processBtn-bewerbung" disabled>
+              {{ trans('general.Extract_Text') }}
+            </button>
 
-    </div>
+            {{-- Loader --}}
+            <button class="sdapp-btn sdapp-btn--primary sdapp-doc-generate-btn d-none" id="loader-bewerbung" type="button" disabled>
+              <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              {{ trans('general.Loading') }}
+            </button>
 
-
-
-    {{-- <head>
-    <style>
-        body {
-            margin: 5px;
-            background: #f4f4f4;
-        }
-        .tab {
-            display: none;
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        .tab.active {
-            display: block;
-        }
-        .tabs {
-            display: flex;
-            margin-bottom: 20px;
-        }
-        .tab-button {
-            padding: 10px 15px;
-            cursor: pointer;
-            background: transparent;
-            border-radius: 5px;
-        }
-        .tab-button.active {
-            background: linear-gradient(135deg, rgb(42, 44, 176) 0%, rgb(71, 71, 222) 100%);
-            color: white;
-        }
-        .card {
-            border: 1px solid #ddd;
-            padding: 20px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            background: #fff;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-        }
-        button {
-            background: #287F71;
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 200px;
-            margin-left: 0px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .button-group {
-            gap: 20px;
-        }
-        #loading, #scanLoading {
-            display: none;
-            color: blue;
-        }
-        #verificationStats, #scanStats {
-            display: none;
-            color: green;
-        }
-        #downloadBtn {
-            background-color: gray;
-            cursor: not-allowed;
-        }
-    </style>
-</head>
-
-<div class="d-flex dashboard-parent">
-    <div class="content">
-        <div class="container-fluid">
-            <div class="tabs">
-                <div class="tab-button active" data-tab="certificates">{{ trans('general.Certificates') }}</div>
-
+            {{-- Extracted text --}}
+            <div class="mt-3">
+              <h6>{{ trans('general.Extracted_Text') }}:</h6>
+              <textarea class="form-control" id="extractedText-bewerbung" rows="5" readonly></textarea>
             </div>
 
-            <!-- Certificates Tab -->
-            <div id="certificates" class="tab active">
-                <div class="card">
-                    <h3>{{ trans('general.Certificates_Management') }}</h3>
-                    <p>{{ trans('general.Upload_Verify') }}</p>
-                    <div class="button-group">
-                        <button onclick="document.getElementById('fileInput').click()">{{ trans('general.Upload_Certificate') }}</button>
-                        <button onclick="verifyCertificate()">{{ trans('general.Verify_Certificate') }}</button>
-                        <button id="downloadBtn" onclick="downloadCertificate()" disabled>{{ trans('general.Download_Certificate') }}</button>
-                    </div>
-                    <input type="file" id="fileInput" style="display: none;" onchange="showFileName()">
-                    <div id="fileName"></div>
-                    <div id="loading">{{ trans('general.Scanning_Certificate') }}</div>
-                    <div id="verificationStats">✅ {{ trans('general.Valid_Certificate') }}</div>
-                </div>
+            {{-- Example output box --}}
+            <div class="sdapp-doc-example-box mt-4">
+              <div class="sdapp-doc-example-box__title">Beispiel-Output</div>
+              <p class="sdapp-doc-example-box__text">"Die KI-Analyse ist eine simulierte Funktion. In einer echten Anwendung würde hier das Ergebnis deiner Analyse, dein generiertes Anschreiben oder dein optimierter Lebenslauf angezeigt."</p>
+            </div>
+          </div>
+
+          <!-- ── Tab: Lebenslauf ── -->
+          <div class="tab-pane fade" id="lebenslauf" role="tabpanel">
+
+            <div class="sdapp-doc-dropzone" onclick="document.getElementById('sdapp-upload-lebenslauf').click();">
+              <div class="sdapp-doc-dropzone__icon">
+                <i data-lucide="cloud-upload" width="40" height="40"></i>
+              </div>
+              <div class="sdapp-doc-dropzone__title">Lebenslauf optimieren lassen</div>
+              <div class="sdapp-doc-dropzone__subtitle">Lade deinen aktuellen Lebenslauf hoch und erhalte Verbesserungsvorschläge.</div>
+              <button class="sdapp-btn sdapp-btn--outline" type="button">Datei auswählen</button>
+              <input type="file" id="sdapp-upload-lebenslauf" style="display:none;" accept=".pdf,.doc,.docx" />
             </div>
 
-            <!-- Document Scanner Tab -->
+            {{-- Inputs for resume generation --}}
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <textarea id="lebenslauf-job" style="min-height:120px;background-color:rgba(237,242,245,0.33);" class="form-control border-0" placeholder="Stellenbeschreibung hier einfügen.."></textarea>
+              </div>
+              <div class="col-md-6">
+                <textarea id="lebenslauf-skills" style="min-height:120px;background-color:rgba(237,242,245,0.33);" class="form-control border-0" placeholder="Deine Fähigkeiten, Erfahrungen und relevante Projekte.."></textarea>
+              </div>
+            </div>
+            <textarea id="lebenslauf-extra" style="background-color:rgba(237,242,245,0.33);" class="form-control border-0 mb-3" placeholder="Über sich selbst, Ziele, Hobbys und andere"></textarea>
 
-            
-            
-        </div>
-    </div>
-</div>
---}}
+            <button class="sdapp-btn sdapp-btn--primary sdapp-doc-generate-btn" id="lebenslauf-generate-btn">Lebenslauf optimieren</button>
+
+            {{-- Result cards --}}
+            <div class="d-block gap-2 mt-2" id="lebenslauf-results">
+              <div class="card mt-2 p-3 col-md-6" id="lebenslauf-result-card">
+                <h6 class="mb-1 fw-semibold">Erstellter Lebenslauf:</h6>
+                <p class="small text-muted mb-0">Dein Lebenslauf wird hier erscheinen..</p>
+              </div>
+              <div class="card mt-2 p-3 col-md-6" id="cover-letter-result-card">
+                <h6 class="mb-1 fw-semibold">Erstelltes Motivationsschreiben:</h6>
+                <p class="small text-muted mb-0">Dein Schreiben wird hier erscheinen..</p>
+              </div>
+            </div>
+
+            <div class="exports-btn mt-3">
+              <button class="btn rounded-3" id="lebenslauf-pdf-export-btn">
+                <i class="bi bi-file-earmark me-1"></i> Als PDF exportieren
+              </button>
+            </div>
+
+            <div class="sdapp-doc-example-box mt-4">
+              <div class="sdapp-doc-example-box__title">Beispiel-Output</div>
+              <p class="sdapp-doc-example-box__text">"Die KI-Analyse ist eine simulierte Funktion. In einer echten Anwendung würde hier das Ergebnis deiner Analyse, dein generiertes Anschreiben oder dein optimierter Lebenslauf angezeigt."</p>
+            </div>
+          </div>
+
+          <!-- ── Tab: Anschreiben (Plagiat-Checker) ── -->
+          <div class="tab-pane fade" id="anschreiben" role="tabpanel">
+
+            <div class="sdapp-doc-dropzone" onclick="document.getElementById('sdapp-upload-anschreiben').click();">
+              <div class="sdapp-doc-dropzone__icon">
+                <i data-lucide="cloud-upload" width="40" height="40"></i>
+              </div>
+              <div class="sdapp-doc-dropzone__title">Anschreiben erstellen lassen</div>
+              <div class="sdapp-doc-dropzone__subtitle">Lade die Stellenausschreibung hoch und erhalte ein individuelles Anschreiben.</div>
+              <button class="sdapp-btn sdapp-btn--outline" type="button">Datei auswählen</button>
+              <input type="file" id="sdapp-upload-anschreiben" style="display:none;" accept=".pdf,.doc,.docx,.txt" />
+            </div>
+
+            {{-- Plagiarism check text input --}}
+            <label class="form-label">Dokument für Plagiat-Check:</label>
+            <textarea id="anschreiben-plagiat-text" style="background-color:rgba(237,242,245,0.33);" class="form-control border-0 mb-3" placeholder="Füge hier den Text für den Plagiat-Check ein..."></textarea>
+
+            <button class="sdapp-btn sdapp-btn--primary sdapp-doc-generate-btn" id="anschreiben-plagiat-btn">Anschreiben generieren</button>
+
+            <div class="card mt-3 p-3" id="anschreiben-plagiat-result">
+              <h6 class="mb-1 fw-semibold">Plagiat-Scan Ergebnis:</h6>
+              <p class="small text-muted mb-0">Ergebnis des Plagiat-Checks wird hier angezeigt....</p>
+            </div>
+
+            <div class="card mt-3 p-3">
+              <h6 class="mb-1 fw-semibold">Exportoptionen:</h6>
+              <div class="exports-btn" id="anschreiben-exports">
+                <button class="btn rounded-3"><i class="bi bi-file-earmark me-1"></i> Als PDF exportieren</button>
+                <button class="btn rounded-3"><i class="bi bi-file-earmark me-1"></i> Als Word-Datei exportieren</button>
+                <button class="btn rounded-3"><i class="bi bi-share-fill me-1"></i> Als Word-Datei exportieren</button>
+              </div>
+            </div>
+
+            <div class="sdapp-doc-example-box mt-4">
+              <div class="sdapp-doc-example-box__title">Beispiel-Output</div>
+              <p class="sdapp-doc-example-box__text">"Die KI-Analyse ist eine simulierte Funktion. In einer echten Anwendung würde hier das Ergebnis deiner Analyse, dein generiertes Anschreiben oder dein optimierter Lebenslauf angezeigt."</p>
+            </div>
+          </div>
+
+          <!-- ── Tab: Hausarbeit (Dokument verbessern) ── -->
+          <div class="tab-pane fade" id="hausarbeit" role="tabpanel">
+
+            <div class="sdapp-doc-dropzone" onclick="document.getElementById('sdapp-upload-hausarbeit').click();">
+              <div class="sdapp-doc-dropzone__icon">
+                <i data-lucide="cloud-upload" width="40" height="40"></i>
+              </div>
+              <div class="sdapp-doc-dropzone__title">Hausarbeit prüfen lassen</div>
+              <div class="sdapp-doc-dropzone__subtitle">Lade deine Hausarbeit hoch und erhalte detailliertes Feedback.</div>
+              <button class="sdapp-btn sdapp-btn--outline" type="button">Datei auswählen</button>
+              <input type="file" id="sdapp-upload-hausarbeit" style="display:none;" accept=".pdf,.doc,.docx,.txt" />
+            </div>
+
+            {{-- Improve text inputs --}}
+            <textarea id="hausarbeit-text" style="background-color:rgba(237,242,245,0.33);" class="form-control border-0 mb-3" placeholder="Füge deinen Dokumenttext hier ein..."></textarea>
+
+            <label for="tone1" class="form-label">Gewünschter Ton (optional):</label>
+            <select class="form-select mb-3" style="width:auto;" id="tone1">
+              <option>Standard verbessern</option>
+              <option>Professionell &amp; Formell</option>
+              <option>Freundlich &amp; Zugänglich</option>
+              <option>Überzeugend &amp; Stark</option>
+              <option>Kurz &amp; Prägnant</option>
+              <option>Enthusiastisch &amp; Motivierend</option>
+            </select>
+
+            <button class="sdapp-btn sdapp-btn--primary sdapp-doc-generate-btn" id="hausarbeit-improve-btn">Feedback erhalten</button>
+
+            <div class="card mt-3 p-3">
+              <h6 class="mb-1 fw-semibold">Verbessertes Dokument:</h6>
+              <p class="small text-muted mb-0" id="hausarbeit-result-text">Dein verbesserter Text wird hier erscheinen.</p>
+            </div>
+
+            <div class="sdapp-doc-example-box mt-4">
+              <div class="sdapp-doc-example-box__title">Beispiel-Output</div>
+              <p class="sdapp-doc-example-box__text">"Die KI-Analyse ist eine simulierte Funktion. In einer echten Anwendung würde hier das Ergebnis deiner Analyse, dein generiertes Anschreiben oder dein optimierter Lebenslauf angezeigt."</p>
+            </div>
+          </div>
+
+        </div><!-- /tab-content -->
+      </div><!-- /tabs wrapper -->
+
+    </div><!-- /page-content -->
+  </div><!-- /main-wrapper -->
 
 @endsection
 
 @section('script')
-    
-<script>
-        document.getElementById("docInput").addEventListener("change", function(event) {
-        let file = event.target.files[0];
-        let previewContainer = document.getElementById("previewContainer");
-        let imagePreview = document.getElementById("imagePreview");
-        let pdfPreview = document.getElementById("pdfPreview");
-        let processBtn = document.getElementById("processBtn");
-    
-        if (!file) return;
-    
-        let fileType = file.type;
-        previewContainer.classList.remove("d-none");
-        imagePreview.style.display = "none";
-        pdfPreview.style.display = "none";
-    
-        if (fileType.startsWith("image/")) {
-            let reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = "block";
-            };
-            reader.readAsDataURL(file);
-        } else if (fileType === "application/pdf") {
-            pdfPreview.src = URL.createObjectURL(file);
-            pdfPreview.style.display = "block";
-        }
-    
-        processBtn.disabled = false;
+
+  {{-- ══════════════════════════════════════════════════
+       1. BEWERBUNG TAB — File upload preview + PDF text extraction
+  ══════════════════════════════════════════════════ --}}
+  <script>
+    document.getElementById('sdapp-upload-bewerbung').addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const previewContainer = document.getElementById('previewContainer-bewerbung');
+      const imagePreview     = document.getElementById('imagePreview-bewerbung');
+      const pdfPreview       = document.getElementById('pdfPreview-bewerbung');
+      const processBtn       = document.getElementById('processBtn-bewerbung');
+
+      previewContainer.classList.remove('d-none');
+      imagePreview.style.display = 'none';
+      pdfPreview.style.display   = 'none';
+
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = e => { imagePreview.src = e.target.result; imagePreview.style.display = 'block'; };
+        reader.readAsDataURL(file);
+      } else if (file.type === 'application/pdf') {
+        pdfPreview.src = URL.createObjectURL(file);
+        pdfPreview.style.display = 'block';
+      }
+
+      processBtn.disabled = false;
     });
 
-    document.getElementById("processBtn").addEventListener("click", function() {
-    let fileInput = document.getElementById("docInput").files[0];
-    let processBtn = document.getElementById("processBtn");
-    let loaderBtn = document.getElementById("loader-button");
+    document.getElementById('processBtn-bewerbung').addEventListener('click', function () {
+      const fileInput  = document.getElementById('sdapp-upload-bewerbung').files[0];
+      const processBtn = document.getElementById('processBtn-bewerbung');
+      const loaderBtn  = document.getElementById('loader-bewerbung');
 
-    if (!fileInput) {
+      if (!fileInput) {
         toastr.error("{{ trans('general.Upload_Document_First') }}");
         return;
-    }
+      }
 
-    processBtn.classList.add("d-none");
-    loaderBtn.classList.remove("d-none");
+      processBtn.classList.add('d-none');
+      loaderBtn.classList.remove('d-none');
 
-    let formData = new FormData();
-    formData.append("document", fileInput);
-    formData.append("_token", "{{ csrf_token() }}");
+      const formData = new FormData();
+      formData.append('document', fileInput);
+      formData.append('_token', '{{ csrf_token() }}');
 
-    fetch("{{ route('document.process') }}", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-
-        loaderBtn.classList.add("d-none");
-        processBtn.classList.remove("d-none");
-
-        if (data.error) {
+      fetch("{{ route('document.process') }}", { method: 'POST', body: formData })
+        .then(r => r.json())
+        .then(data => {
+          loaderBtn.classList.add('d-none');
+          processBtn.classList.remove('d-none');
+          if (data.error) {
             toastr.error(data.error);
-        } else {
-            document.getElementById("extractedText").value = data.text;
-            toastr.success("Text extracted successfully!");
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        toastr.error("{{ trans('general.Failed_Process_Document') }}");
-
-
-        loaderBtn.classList.add("d-none");
-        processBtn.classList.remove("d-none");
-    });
-});
-
-
-    document.querySelectorAll(".tab-button").forEach(button => {
-        button.addEventListener("click", function () {
-            document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
-            this.classList.add("active");
-            document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-            document.getElementById(this.dataset.tab).classList.add("active");
+          } else {
+            document.getElementById('extractedText-bewerbung').value = data.text;
+            toastr.success('Text extracted successfully!');
+          }
+        })
+        .catch(() => {
+          loaderBtn.classList.add('d-none');
+          processBtn.classList.remove('d-none');
+          toastr.error("{{ trans('general.Failed_Process_Document') }}");
         });
     });
-    </script>
-    
+  </script>
 
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.querySelector('#tab-3 .btn-primary');
-    if (!btn) return; // agar button nahi mila toh kuch na karo
+  {{-- ══════════════════════════════════════════════════
+       2. LEBENSLAUF TAB — Generate resume + cover letter + PDF export
+  ══════════════════════════════════════════════════ --}}
+  <script>
+    let generatedResume      = '';
+    let generatedCoverLetter = '';
 
-    btn.addEventListener('click', function () {
-let textarea = document.querySelector("#tab-3 textarea");
-        let tone = document.getElementById("tone1").value;
-if (!textarea) {
-    toastr.error("Textfeld nicht gefunden.");
-    return;
-}
-let text = textarea.value.trim();
+    document.getElementById('lebenslauf-generate-btn').addEventListener('click', function () {
+      const jobDescription = document.getElementById('lebenslauf-job').value.trim();
+      const skills         = document.getElementById('lebenslauf-skills').value.trim();
+      const experience     = document.getElementById('lebenslauf-extra').value.trim();
 
-
-
-
-        this.disabled = true;
-        this.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Verbessern...';
-
-        fetch("{{ route('document.improve') }}", {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ text, tone })
-            })
-            .then(response => response.json())
-            .then(data => {
-                this.disabled = false;
-                this.innerHTML = 'Analysieren und Verbessern';
-
-                if (data.error) {
-                    toastr.error(data.error);
-                } else {
-                    document.querySelector("#tab-3 .card.mt-3 p").innerText = data.improved;
-                    toastr.success("Dokument erfolgreich verbessert!");
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                this.disabled = false;
-                this.innerHTML = 'Analysieren und Verbessern';
-                toastr.error("Etwas ist schief gelaufen.");
-            });
-    });
-});
-
-    </script>
-
-
-<script>
-let generatedResume = "";
-let generatedCoverLetter = "";
-
-document.querySelector('#tab-1 .btn-primary').addEventListener('click', function() {
-    let textareas = document.querySelectorAll('#tab-1 textarea');
-    let jobDescription = textareas[0].value.trim();
-    let skills = textareas[1].value.trim();
-    let experience = textareas[2].value.trim();
-
-    if (!jobDescription || !skills) {
-        toastr.error("Bitte Stellenbeschreibung und deine Fähigkeiten/Erfahrungen eingeben.");
+      if (!jobDescription || !skills) {
+        toastr.error('Bitte Stellenbeschreibung und deine Fähigkeiten/Erfahrungen eingeben.');
         return;
-    }
+      }
 
-    this.disabled = true;
-    this.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Dokumente erstellen...';
+      this.disabled   = true;
+      this.innerHTML  = '<span class="spinner-border spinner-border-sm me-2"></span> Dokumente erstellen...';
 
-    fetch("{{ route('career.generateResume') }}", {
-        method: "POST",
+      fetch("{{ route('career.generateResume') }}", {
+        method: 'POST',
         headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            "Accept": "application/json",
-            "Content-Type": "application/json"
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            jobDescription: jobDescription,
-            skills: skills,
-            experience: experience
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        this.disabled = false;
-        this.innerHTML = 'Dokumente erstellen';
+        body: JSON.stringify({ jobDescription, skills, experience })
+      })
+        .then(r => r.json())
+        .then(data => {
+          this.disabled  = false;
+          this.innerHTML = 'Lebenslauf optimieren';
 
-        if (data.resume && data.coverLetter) {
-            generatedResume = data.resume;
+          if (data.resume && data.coverLetter) {
+            generatedResume      = data.resume;
             generatedCoverLetter = data.coverLetter;
 
-            // Replace paragraph with textarea for Resume
-            let resumeContainer = document.querySelector('#tab-1 .card.mt-2.p-3:nth-child(1)');
-            resumeContainer.querySelector('p').outerHTML =
-                `<textarea class="form-control border-0 bg-light" style="min-height:500px;">${data.resume}</textarea>`;
+            document.querySelector('#lebenslauf-result-card p').outerHTML =
+              `<textarea class="form-control border-0 bg-light" style="min-height:300px;">${data.resume}</textarea>`;
 
-            // Replace paragraph with textarea for Cover Letter
-            let coverContainer = document.querySelector('#tab-1 .card.mt-2.p-3:nth-child(2)');
-            coverContainer.querySelector('p').outerHTML =
-                `<textarea class="form-control border-0 bg-light" style="min-height:500px;">${data.coverLetter}</textarea>`;
+            document.querySelector('#cover-letter-result-card p').outerHTML =
+              `<textarea class="form-control border-0 bg-light" style="min-height:300px;">${data.coverLetter}</textarea>`;
 
-            toastr.success("Dokumente erfolgreich erstellt!");
-        } else {
-            toastr.error("Konnte Dokumente nicht erstellen.");
-        }
-    })
-    .catch(error => {
-        console.error(error);
-        this.disabled = false;
-        this.innerHTML = 'Dokumente erstellen';
-        toastr.error("Etwas ist schief gelaufen.");
-    });
-});
-
-// 📄 PDF export button click
-document.querySelector('#tab-1 .exports-btn button').addEventListener('click', function() {
-    if (!generatedResume || !generatedCoverLetter) {
-        toastr.error("Bitte erst Dokumente erstellen, bevor du exportierst.");
-        return;
-    }
-
-    fetch("{{ route('career.downloadPdf') }}", {
-        method: "POST",
-        headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            "Accept": "application/pdf",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            resume: generatedResume,
-            coverLetter: generatedCoverLetter
+            toastr.success('Dokumente erfolgreich erstellt!');
+          } else {
+            toastr.error('Konnte Dokumente nicht erstellen.');
+          }
         })
-    })
-    .then(response => response.blob())
-    .then(blob => {
-        let link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = "resume_and_cover_letter.pdf";
-        link.click();
-    })
-    .catch(err => console.error(err));
-});
-
-</script>
-
-
-    <script>
-        document.querySelector('#tab-2 .btn-primary').addEventListener('click', function() {
-            let textarea = document.querySelector('#tab-2 textarea').value.trim();
-
-            if (!textarea) {
-                toastr.error("Bitte gebe einen Text für den Plagiat-Check ein.");
-                return;
-            }
-
-            this.disabled = true;
-            this.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Prüfen...';
-
-            fetch("{{ route('plagiarism.check') }}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        text: textarea
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    this.disabled = false;
-                    this.innerHTML = 'Auf Plagiate prüfen';
-
-                    if (data.result) {
-                        document.querySelector('#tab-2 .card.mt-3.p-3 p').innerHTML = data.result;
-                        toastr.success("Plagiat-Check abgeschlossen!");
-                    } else {
-                        toastr.error("Keine Ergebnisse erhalten.");
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    this.disabled = false;
-                    this.innerHTML = 'Auf Plagiate prüfen';
-                    toastr.error("Etwas ist schief gelaufen.");
-                });
+        .catch(() => {
+          this.disabled  = false;
+          this.innerHTML = 'Lebenslauf optimieren';
+          toastr.error('Etwas ist schief gelaufen.');
         });
-    </script>
+    });
 
+    document.getElementById('lebenslauf-pdf-export-btn').addEventListener('click', function () {
+      if (!generatedResume || !generatedCoverLetter) {
+        toastr.error('Bitte erst Dokumente erstellen, bevor du exportierst.');
+        return;
+      }
 
+      fetch("{{ route('career.downloadPdf') }}", {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          'Accept': 'application/pdf',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ resume: generatedResume, coverLetter: generatedCoverLetter })
+      })
+        .then(r => r.blob())
+        .then(blob => {
+          const link  = document.createElement('a');
+          link.href   = URL.createObjectURL(blob);
+          link.download = 'resume_and_cover_letter.pdf';
+          link.click();
+        })
+        .catch(err => console.error(err));
+    });
+  </script>
 
+  {{-- ══════════════════════════════════════════════════
+       3. ANSCHREIBEN TAB — Plagiarism check + export
+  ══════════════════════════════════════════════════ --}}
+  <script>
+    document.getElementById('anschreiben-plagiat-btn').addEventListener('click', function () {
+      const text = document.getElementById('anschreiben-plagiat-text').value.trim();
 
-    <script>
-        function switchTab(index) {
-            // Switch active tab button
-            document.querySelectorAll('.tab-button').forEach((btn, i) => {
-                btn.classList.toggle('active', i === index);
-            });
+      if (!text) {
+        toastr.error('Bitte gebe einen Text für den Plagiat-Check ein.');
+        return;
+      }
 
-            // Switch card content
-            document.querySelectorAll('.tab-card').forEach((card, i) => {
-                card.classList.toggle('d-none', i !== index);
-            });
-        }
-    </script>
+      this.disabled  = true;
+      this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Prüfen...';
 
-<script>
-document.querySelectorAll('#tab-2 .exports-btn .btn').forEach(function(btn, index) {
-    btn.addEventListener('click', function() {
-        let content = document.querySelector('#tab-2 .card.mt-3.p-3 p').innerText;
+      fetch("{{ route('plagiarism.check') }}", {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text })
+      })
+        .then(r => r.json())
+        .then(data => {
+          this.disabled  = false;
+          this.innerHTML = 'Anschreiben generieren';
+
+          if (data.result) {
+            document.querySelector('#anschreiben-plagiat-result p').innerHTML = data.result;
+            toastr.success('Plagiat-Check abgeschlossen!');
+          } else {
+            toastr.error('Keine Ergebnisse erhalten.');
+          }
+        })
+        .catch(() => {
+          this.disabled  = false;
+          this.innerHTML = 'Anschreiben generieren';
+          toastr.error('Etwas ist schief gelaufen.');
+        });
+    });
+
+    // Export buttons (PDF = index 0, Word = index 1)
+    document.querySelectorAll('#anschreiben-exports .btn').forEach(function (btn, index) {
+      btn.addEventListener('click', function () {
+        const content = document.querySelector('#anschreiben-plagiat-result p').innerText;
 
         if (!content || content.includes('wird hier angezeigt')) {
-            toastr.error("Bitte zuerst den Plagiat-Check durchführen.");
-            return;
+          toastr.error('Bitte zuerst den Plagiat-Check durchführen.');
+          return;
         }
 
-        let route = index === 0 ?
-            "{{ route('export.pdf') }}" :
-            "{{ route('export.word') }}";
+        const route = index === 0 ? "{{ route('export.pdf') }}" : "{{ route('export.word') }}";
 
         fetch(route, {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ content })
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ content })
         })
-        .then(async response => {
+          .then(async response => {
             if (!response.ok) {
-                // Read once as text
-                const text = await response.text();
-                // Try to parse JSON from it
-                try {
-                    const json = JSON.parse(text);
-                    throw new Error("Server error: " + JSON.stringify(json));
-                } catch (e) {
-                    // If not JSON, show raw text
-                    throw new Error("Server error: " + text);
-                }
+              const text = await response.text();
+              try { throw new Error('Server error: ' + JSON.stringify(JSON.parse(text))); }
+              catch { throw new Error('Server error: ' + text); }
             }
             return response.blob();
-        })
-        .then(blob => {
-            let fileType = index === 0 ? "application/pdf" :
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-            let fileName = index === 0 ? "document.pdf" : "document.docx";
-
-            let link = document.createElement('a');
+          })
+          .then(blob => {
+            const fileType = index === 0 ? 'application/pdf'
+              : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            const fileName = index === 0 ? 'document.pdf' : 'document.docx';
+            const link = document.createElement('a');
             link.href = window.URL.createObjectURL(new Blob([blob], { type: fileType }));
             link.download = fileName;
             document.body.appendChild(link);
             link.click();
             link.remove();
+          })
+          .catch(error => toastr.error('Export fehlgeschlagen: ' + error.message));
+      });
+    });
+  </script>
+
+  {{-- ══════════════════════════════════════════════════
+       4. HAUSARBEIT TAB — Document improve / feedback
+  ══════════════════════════════════════════════════ --}}
+  <script>
+    document.getElementById('hausarbeit-improve-btn').addEventListener('click', function () {
+      const text = document.getElementById('hausarbeit-text').value.trim();
+      const tone = document.getElementById('tone1').value;
+
+      this.disabled  = true;
+      this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Verbessern...';
+
+      fetch("{{ route('document.improve') }}", {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text, tone })
+      })
+        .then(r => r.json())
+        .then(data => {
+          this.disabled  = false;
+          this.innerHTML = 'Feedback erhalten';
+
+          if (data.error) {
+            toastr.error(data.error);
+          } else {
+            document.getElementById('hausarbeit-result-text').innerText = data.improved;
+            toastr.success('Dokument erfolgreich verbessert!');
+          }
         })
-        .catch(error => {
-            console.error(error);
-            toastr.error("Export fehlgeschlagen: " + error.message);
+        .catch(() => {
+          this.disabled  = false;
+          this.innerHTML = 'Feedback erhalten';
+          toastr.error('Etwas ist schief gelaufen.');
         });
     });
-});
-</script>
+  </script>
 
 @endsection

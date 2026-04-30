@@ -1,0 +1,722 @@
+/* ============================================================
+   SHARED STYLES - Student Dashboard App
+   Fonts: Lexend (headings), Inter (body)
+   ============================================================ */
+
+   @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+   /* ── CSS Variables ── */
+   :root {
+     --sdapp-primary: #3b35d4;
+     --sdapp-primary-light: #a89ef5;
+     --sdapp-primary-soft: #eeeeff;
+     --sdapp-accent: #4f46e5;
+     --sdapp-success: #16a34a;
+     --sdapp-danger: #dc2626;
+     --sdapp-warning: #ca8a04;
+     --sdapp-bg: #f5f5f7;
+     --sdapp-white: #ffffff;
+     --sdapp-border: #e5e7eb;
+     --sdapp-text: #111827;
+     --sdapp-text-muted: #6b7280;
+     --sdapp-text-light: #9ca3af;
+     --sdapp-sidebar-width: 220px;
+     --sdapp-radius: 10px;
+     --sdapp-shadow: 0 1px 4px rgba(0,0,0,0.07);
+     --sdapp-shadow-md: 0 4px 16px rgba(0,0,0,0.09);
+   }
+   
+   /* ── Reset & Base ── */
+   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+   
+   html { font-size: 15px; }
+   
+   body {
+     font-family: 'Inter', sans-serif;
+     background: var(--sdapp-bg);
+     color: var(--sdapp-text);
+     min-height: 100vh;
+     display: flex;
+   }
+   
+   h1, h2, h3, h4, h5, h6,
+   .sdapp-heading {
+     font-family: 'Lexend', sans-serif;
+   }
+   
+   /* ============================================================
+      SIDEBAR
+      ============================================================ */
+   .sdapp-sidebar {
+     width: var(--sdapp-sidebar-width);
+     background: var(--sdapp-white);
+     border-right: 1px solid var(--sdapp-border);
+     min-height: 100vh;
+     display: flex;
+     flex-direction: column;
+     position: fixed;
+     top: 0; left: 0;
+     z-index: 200;
+   }
+   
+   .sdapp-sidebar__logo {
+     padding: 22px 20px 18px;
+     border-bottom: 1px solid var(--sdapp-border);
+   }
+   
+   .sdapp-sidebar__logo-text {
+     font-family: 'Lexend', sans-serif;
+     font-weight: 700;
+     font-size: 1.15rem;
+     color: var(--sdapp-primary);
+     letter-spacing: -0.5px;
+   }
+   
+   .sdapp-sidebar__nav {
+     padding: 14px 0;
+     flex: 1;
+   }
+   
+   .sdapp-sidebar__nav-item {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     padding: 10px 20px;
+     color: var(--sdapp-text-muted);
+     font-size: 0.875rem;
+     font-weight: 500;
+     text-decoration: none;
+     cursor: pointer;
+     border-left: 3px solid transparent;
+     transition: all 0.18s ease;
+   }
+   
+   .sdapp-sidebar__nav-item:hover {
+     background: var(--sdapp-primary-soft);
+     color: var(--sdapp-primary);
+   }
+   
+   .sdapp-sidebar__nav-item.sdapp-active {
+     background: var(--sdapp-primary-soft);
+     color: var(--sdapp-primary);
+     border-left-color: var(--sdapp-primary);
+     font-weight: 600;
+   }
+   
+   .sdapp-sidebar__nav-item lucide-icon,
+   .sdapp-sidebar__nav-item svg {
+     flex-shrink: 0;
+   }
+   
+   .sdapp-sidebar__footer {
+     padding: 16px 20px;
+     border-top: 1px solid var(--sdapp-border);
+     font-size: 0.8rem;
+     color: var(--sdapp-text-muted);
+   }
+   
+   /* ============================================================
+      MAIN LAYOUT
+      ============================================================ */
+   .sdapp-main-wrapper {
+     /* margin-left: var(--sdapp-sidebar-width); */
+     flex: 1;
+     display: flex;
+     flex-direction: column;
+     min-height: 100vh;
+   }
+   .content{
+    width: 100%;
+   }
+
+   /* ── Top Banner ── */
+   .sdapp-topbanner {
+     background: var(--sdapp-primary-soft);
+     border-bottom: 1px solid #d8d5f9;
+     padding: 9px 28px;
+     font-size: 0.8rem;
+     color: var(--sdapp-primary);
+     display: flex;
+     align-items: center;
+     gap: 8px;
+   }
+   
+   .sdapp-topbanner svg { flex-shrink: 0; }
+   
+   /* ── Page Content ── */
+   .sdapp-page-content {
+     padding: 28px 32px;
+     flex: 1;
+   }
+   
+   /* ── Page Header ── */
+   .sdapp-page-header { margin-bottom: 22px; }
+   
+   .sdapp-page-header__title {
+     font-family: 'Lexend', sans-serif;
+     font-size: 1.5rem;
+     font-weight: 700;
+     color: var(--sdapp-text);
+     line-height: 1.2;
+   }
+   
+   .sdapp-page-header__subtitle {
+     font-size: 0.875rem;
+     color: var(--sdapp-text-muted);
+     margin-top: 3px;
+   }
+   
+   /* ============================================================
+      CARDS / BOXES
+      ============================================================ */
+   .sdapp-card {
+     background: var(--sdapp-white);
+     border: 1px solid var(--sdapp-border);
+     border-radius: var(--sdapp-radius);
+     box-shadow: var(--sdapp-shadow);
+   }
+   
+   /* ============================================================
+      BUTTONS
+      ============================================================ */
+   .sdapp-btn {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     gap: 7px;
+     padding: 9px 18px;
+     border-radius: 7px;
+     font-family: 'Inter', sans-serif;
+     font-size: 0.875rem;
+     font-weight: 600;
+     cursor: pointer;
+     border: none;
+     transition: all 0.18s ease;
+     text-decoration: none;
+   }
+   
+   .sdapp-btn--primary {
+     background: var(--sdapp-primary);
+     color: #fff;
+   }
+   .sdapp-btn--primary:hover { background: #2f29b8; color: #fff; }
+   
+   .sdapp-btn--primary-soft {
+     background: var(--sdapp-primary-light);
+     color: var(--sdapp-white);
+   }
+   .sdapp-btn--primary-soft:hover { background: #9188ef; }
+   
+   .sdapp-btn--outline {
+     background: #fff;
+     color: var(--sdapp-text);
+     border: 1px solid var(--sdapp-border);
+   }
+   .sdapp-btn--outline:hover { background: var(--sdapp-bg); }
+   
+   .sdapp-btn--block { width: 100%; display: flex; }
+   
+   /* ============================================================
+      PAGE 1 — DASHBOARD
+      ============================================================ */
+   
+   /* Semester progress */
+   .sdapp-dash-progress-card {
+     padding: 20px 24px;
+     margin-bottom: 24px;
+   }
+   
+   .sdapp-dash-progress-card__title {
+     font-family: 'Lexend', sans-serif;
+     font-size: 1rem;
+     font-weight: 600;
+     margin-bottom: 4px;
+   }
+   
+   .sdapp-dash-progress-card__subtitle {
+     font-size: 0.8rem;
+     color: var(--sdapp-text-muted);
+     margin-bottom: 14px;
+   }
+   
+   .sdapp-progress-bar-track {
+     height: 8px;
+     background: #e5e7eb;
+     border-radius: 99px;
+     overflow: hidden;
+     margin-bottom: 6px;
+   }
+   
+   .sdapp-progress-bar-fill {
+     height: 100%;
+     background: var(--sdapp-primary);
+     border-radius: 99px;
+     transition: width 0.4s ease;
+   }
+   
+   .sdapp-progress-labels {
+     display: flex;
+     justify-content: space-between;
+     font-size: 0.72rem;
+     color: var(--sdapp-text-muted);
+   }
+   
+   /* Focus section */
+   .sdapp-section-title {
+     font-family: 'Lexend', sans-serif;
+     font-size: 1rem;
+     font-weight: 700;
+     margin-bottom: 14px;
+     color: var(--sdapp-text);
+   }
+   
+   .sdapp-dash-focus-grid {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 14px;
+     margin-bottom: 28px;
+   }
+   
+   .sdapp-dash-focus-card {
+     padding: 18px 20px;
+     display: flex;
+     flex-direction: column;
+     gap: 8px;
+   }
+   
+   .sdapp-dash-focus-card__icon-wrap {
+     width: 34px;
+     height: 34px;
+     background: var(--sdapp-primary-soft);
+     border-radius: 8px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: var(--sdapp-primary);
+     flex-shrink: 0;
+   }
+   
+   .sdapp-dash-focus-card__label {
+     font-family: 'Lexend', sans-serif;
+     font-size: 0.9rem;
+     font-weight: 600;
+     color: var(--sdapp-text);
+   }
+   
+   .sdapp-dash-focus-card__desc {
+     font-size: 0.78rem;
+     color: var(--sdapp-text-muted);
+     margin-bottom: 2px;
+   }
+   
+   /* Schnellzugriff */
+   .sdapp-dash-quick-grid {
+     display: grid;
+     grid-template-columns: repeat(5, 1fr);
+     gap: 10px;
+   }
+   
+   .sdapp-dash-quick-item {
+     background: var(--sdapp-white);
+     border: 1px solid var(--sdapp-border);
+     border-radius: var(--sdapp-radius);
+     padding: 14px 16px;
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     font-size: 0.85rem;
+     font-weight: 500;
+     color: var(--sdapp-text);
+     cursor: pointer;
+     text-decoration: none;
+     transition: all 0.18s ease;
+   }
+   
+   .sdapp-dash-quick-item:hover {
+     border-color: var(--sdapp-primary-light);
+     color: var(--sdapp-primary);
+     box-shadow: var(--sdapp-shadow-md);
+   }
+   
+   .sdapp-dash-quick-item svg {
+     color: var(--sdapp-text-muted);
+     flex-shrink: 0;
+   }
+   
+   .sdapp-dash-quick-item__arrow {
+     margin-left: auto;
+     color: var(--sdapp-text-light);
+   }
+   
+   /* ============================================================
+      PAGE 2 — FINANCE
+      ============================================================ */
+   .sdapp-fin-header-row {
+     display: flex;
+     align-items: flex-start;
+     justify-content: space-between;
+     margin-bottom: 20px;
+   }
+   
+   .sdapp-fin-stats-grid {
+     display: grid;
+     grid-template-columns: repeat(4, 1fr);
+     gap: 14px;
+     margin-bottom: 20px;
+   }
+   
+   .sdapp-fin-stat-card {
+     padding: 18px 20px;
+   }
+   
+   .sdapp-fin-stat-card__label {
+     font-size: 0.78rem;
+     color: var(--sdapp-text-muted);
+     margin-bottom: 6px;
+   }
+   
+   .sdapp-fin-stat-card__value {
+     font-family: 'Lexend', sans-serif;
+     font-size: 1.6rem;
+     font-weight: 700;
+     line-height: 1;
+   }
+   
+   .sdapp-fin-stat-card__value--black { color: var(--sdapp-text); }
+   .sdapp-fin-stat-card__value--red   { color: var(--sdapp-danger); }
+   .sdapp-fin-stat-card__value--green { color: var(--sdapp-success); }
+   
+   .sdapp-fin-stat-card--optimize {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+   
+   .sdapp-fin-charts-row {
+     display: grid;
+     grid-template-columns: 1fr 320px;
+     gap: 14px;
+   }
+   
+   .sdapp-fin-chart-card {
+     padding: 20px 22px;
+   }
+   
+   .sdapp-fin-chart-card__title {
+     font-family: 'Lexend', sans-serif;
+     font-size: 0.95rem;
+     font-weight: 600;
+     margin-bottom: 16px;
+   }
+   
+   /* Bar chart */
+   .sdapp-bar-chart {
+     display: flex;
+     align-items: flex-end;
+     gap: 18px;
+     height: 200px;
+     padding-bottom: 24px;
+     position: relative;
+     border-left: 1px solid var(--sdapp-border);
+     border-bottom: 1px solid var(--sdapp-border);
+     padding-left: 36px;
+   }
+   
+   .sdapp-bar-chart__y-labels {
+     position: absolute;
+     left: 0;
+     top: 0;
+     bottom: 24px;
+     display: flex;
+     flex-direction: column-reverse;
+     justify-content: space-between;
+     padding-bottom: 2px;
+   }
+   
+   .sdapp-bar-chart__y-label {
+     font-size: 0.68rem;
+     color: var(--sdapp-text-muted);
+     line-height: 1;
+   }
+   
+   .sdapp-bar-chart__group {
+     display: flex;
+     align-items: flex-end;
+     gap: 3px;
+     flex: 1;
+     flex-direction: column;
+     justify-content: flex-end;
+   }
+   
+   .sdapp-bar-chart__group-inner {
+     display: flex;
+     align-items: flex-end;
+     gap: 3px;
+     width: 100%;
+   }
+   
+   .sdapp-bar-chart__bar {
+     flex: 1;
+     border-radius: 4px 4px 0 0;
+     min-width: 16px;
+   }
+   
+   .sdapp-bar-chart__bar--income { background: #d1d5db; }
+   .sdapp-bar-chart__bar--expense { background: var(--sdapp-primary); }
+   
+   .sdapp-bar-chart__x-label {
+     font-size: 0.7rem;
+     color: var(--sdapp-text-muted);
+     text-align: center;
+     margin-top: 5px;
+   }
+   
+   /* Categories */
+   .sdapp-fin-cat-card {
+     padding: 20px 22px;
+   }
+   
+   .sdapp-fin-cat-card__title {
+     font-family: 'Lexend', sans-serif;
+     font-size: 0.95rem;
+     font-weight: 600;
+     margin-bottom: 16px;
+   }
+   
+   .sdapp-fin-cat-item {
+     margin-bottom: 14px;
+   }
+   
+   .sdapp-fin-cat-item__header {
+     display: flex;
+     justify-content: space-between;
+     font-size: 0.82rem;
+     margin-bottom: 5px;
+   }
+   
+   .sdapp-fin-cat-item__name { font-weight: 500; }
+   .sdapp-fin-cat-item__amount { color: var(--sdapp-text-muted); }
+   
+   .sdapp-fin-cat-bar-track {
+     height: 6px;
+     background: #f3f4f6;
+     border-radius: 99px;
+     overflow: hidden;
+   }
+   
+   .sdapp-fin-cat-bar-fill {
+     height: 100%;
+     border-radius: 99px;
+   }
+   
+   /* ============================================================
+      PAGE 3 — DOCUMENTS / DOKUMENTEN-KI
+      ============================================================ */
+   .sdapp-doc-tabs-wrapper {
+     background: var(--sdapp-white);
+     border: 1px solid var(--sdapp-border);
+     border-radius: var(--sdapp-radius);
+     box-shadow: var(--sdapp-shadow);
+     overflow: hidden;
+   }
+   
+   /* Override Bootstrap nav-tabs */
+   .sdapp-doc-tabs .nav-tabs {
+     border-bottom: 1px solid var(--sdapp-border) !important;
+     background: #fafafa;
+     padding: 0 4px;
+   }
+   
+   .sdapp-doc-tabs .nav-tabs .nav-link {
+     border: none !important;
+     border-bottom: 2px solid transparent !important;
+     border-radius: 0 !important;
+     color: var(--sdapp-text-muted);
+     font-family: 'Inter', sans-serif;
+     font-size: 0.875rem;
+     font-weight: 500;
+     padding: 13px 22px;
+     margin-bottom: -1px;
+     transition: all 0.18s ease;
+   }
+   
+   .sdapp-doc-tabs .nav-tabs .nav-link:hover {
+     color: var(--sdapp-primary);
+     background: none;
+   }
+   
+   .sdapp-doc-tabs .nav-tabs .nav-link.active {
+     color: var(--sdapp-primary) !important;
+     border-bottom-color: var(--sdapp-primary) !important;
+     font-weight: 600;
+     background: none !important;
+   }
+   
+   .sdapp-doc-tabs .tab-content {
+     padding: 28px;
+   }
+   
+   /* Drop zone */
+   .sdapp-doc-dropzone {
+     border: 2px dashed #d1d5db;
+     border-radius: var(--sdapp-radius);
+     padding: 48px 24px;
+     text-align: center;
+     cursor: pointer;
+     transition: border-color 0.18s ease, background 0.18s ease;
+     margin-bottom: 22px;
+   }
+   
+   .sdapp-doc-dropzone:hover {
+     border-color: var(--sdapp-primary-light);
+     background: var(--sdapp-primary-soft);
+   }
+   
+   .sdapp-doc-dropzone__icon {
+     color: #9ca3af;
+     margin-bottom: 12px;
+   }
+   
+   .sdapp-doc-dropzone__title {
+     font-family: 'Lexend', sans-serif;
+     font-size: 1rem;
+     font-weight: 600;
+     color: var(--sdapp-text);
+     margin-bottom: 5px;
+   }
+   
+   .sdapp-doc-dropzone__subtitle {
+     font-size: 0.8rem;
+     color: var(--sdapp-text-muted);
+     margin-bottom: 16px;
+   }
+   
+   .sdapp-doc-generate-btn {
+     width: 100%;
+     padding: 13px;
+     font-size: 0.9rem;
+     border-radius: 7px;
+     margin-bottom: 20px;
+   }
+   
+   .sdapp-doc-example-box {
+     border: 1px solid var(--sdapp-border);
+     border-radius: var(--sdapp-radius);
+     padding: 16px 20px;
+   }
+   
+   .sdapp-doc-example-box__title {
+     font-family: 'Lexend', sans-serif;
+     font-size: 0.88rem;
+     font-weight: 600;
+     margin-bottom: 8px;
+   }
+   
+   .sdapp-doc-example-box__text {
+     font-size: 0.8rem;
+     color: var(--sdapp-text-muted);
+     font-style: italic;
+   }
+   
+   /* ============================================================
+      PAGE 4 — TOOLKIT
+      ============================================================ */
+   .sdapp-toolkit-topbanner {
+     background: #f0f0ff;
+     border: 1px solid #d8d5f9;
+     border-radius: var(--sdapp-radius);
+     padding: 12px 18px;
+     display: flex;
+     align-items: flex-start;
+     gap: 10px;
+     margin-bottom: 24px;
+     font-size: 0.82rem;
+     color: var(--sdapp-text-muted);
+   }
+   
+   .sdapp-toolkit-topbanner svg { color: var(--sdapp-primary); flex-shrink: 0; margin-top: 1px; }
+   
+   .sdapp-toolkit-topbanner__label {
+     font-size: 0.7rem;
+     font-weight: 700;
+     letter-spacing: 0.08em;
+     text-transform: uppercase;
+     color: var(--sdapp-primary);
+     display: block;
+     margin-bottom: 3px;
+   }
+   
+   .sdapp-toolkit-grid {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 14px;
+   }
+   
+   .sdapp-toolkit-card {
+     padding: 20px 22px;
+     display: flex;
+     flex-direction: column;
+     gap: 0;
+   }
+   
+   .sdapp-toolkit-card__header {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     margin-bottom: 6px;
+   }
+   
+   .sdapp-toolkit-card__icon {
+     color: var(--sdapp-primary);
+     flex-shrink: 0;
+   }
+   
+   .sdapp-toolkit-card__title {
+     font-family: 'Lexend', sans-serif;
+     font-size: 0.95rem;
+     font-weight: 600;
+     color: var(--sdapp-text);
+   }
+   
+   .sdapp-toolkit-card__desc {
+     font-size: 0.8rem;
+     color: var(--sdapp-text-muted);
+     margin-bottom: 14px;
+     line-height: 1.45;
+   }
+   
+   .sdapp-toolkit-card__btn {
+     width: 100%;
+     padding: 10px;
+     font-size: 0.85rem;
+     border-radius: 7px;
+     margin-top: auto;
+   }
+   
+   /* ============================================================
+      RESPONSIVE
+      ============================================================ */
+   @media (max-width: 1100px) {
+     .sdapp-dash-focus-grid { grid-template-columns: repeat(2, 1fr); }
+     .sdapp-dash-quick-grid { grid-template-columns: repeat(3, 1fr); }
+     .sdapp-fin-stats-grid  { grid-template-columns: repeat(2, 1fr); }
+     .sdapp-fin-charts-row  { grid-template-columns: 1fr; }
+     .sdapp-toolkit-grid    { grid-template-columns: repeat(2, 1fr); }
+   }
+   
+   @media (max-width: 768px) {
+     :root { --sdapp-sidebar-width: 0px; }
+     .sdapp-sidebar { display: none; }
+     .sdapp-main-wrapper { margin-left: 0; }
+     .sdapp-page-content { padding: 18px 16px; }
+     .sdapp-dash-focus-grid { grid-template-columns: 1fr; }
+     .sdapp-dash-quick-grid { grid-template-columns: repeat(2, 1fr); }
+     .sdapp-fin-stats-grid  { grid-template-columns: 1fr 1fr; }
+     .sdapp-toolkit-grid    { grid-template-columns: 1fr; }
+     .sdapp-fin-charts-row  { grid-template-columns: 1fr; }
+   }
+   
+   @media (max-width: 480px) {
+     .sdapp-dash-quick-grid { grid-template-columns: 1fr; }
+     .sdapp-fin-stats-grid  { grid-template-columns: 1fr; }
+   }

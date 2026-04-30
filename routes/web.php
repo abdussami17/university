@@ -15,24 +15,23 @@ use App\Http\Controllers\GeminiController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MarketPlaceController;
+use App\Http\Controllers\MeetController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SkillPathController;
-
 use App\Http\Controllers\TaskController;
-
 use App\Http\Controllers\UserpostController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MeetController;
 
 
 
 
 
 
-
+Route::get('/premium',[HomeController::class,'premium'])->name('premium');
 Route::get('/',[HomeController::class,'index'])->name('home');
 
 Route::post('/improve-document', [DashboardController::class, 'improve'])->name('document.improve')->middleware('auth');
@@ -332,6 +331,7 @@ Route::group(['prefix'=> 'admin'],function(){
         Route::post('post/store/sub-category/','storesubcategory')->name('post.store.subcategory');
 });
 
+
     Route::controller(CareerJobsController::class)->group(function(){
         Route::get('career','index')->name('career.index');
         Route::get('career/create','create')->name('career.create');
@@ -405,3 +405,7 @@ Route::get('/meet/search', [DashboardController::class, 'searchmeet'])->name('me
 Route::post('/comment/react', [ForumController::class, 'reactToComment'])->name('comment.react');
 
 Route::post('/comment/react', [ForumController::class, 'reactToComment'])->name('comment.react');
+
+
+
+Route::get('marketplace',[MarketPlaceController::class,'index'])->name('marketplace.index');

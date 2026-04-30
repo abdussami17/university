@@ -40,6 +40,8 @@
     <script src="{{ asset('assets/admin/js/head.js') }}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css" />
     <link rel="stylesheet" href="{{ asset('assets/user/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/design/css/dashboard.css') }}">
+
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 
@@ -431,7 +433,10 @@
     </script>
 
     <script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
-
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
+      </script>
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script>

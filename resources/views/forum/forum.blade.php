@@ -4,6 +4,7 @@
 
 @section('content')
 @push('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/design/css/trends.css') }}">
 @endpush
 
@@ -29,11 +30,12 @@
             <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
           <input
-            type="text"
-            class="trends-vibes-hero-search-input"
-            placeholder="Search..."
-            autocomplete="off"
-          />
+          type="text"
+          id="forumSearchInput"
+          class="trends-vibes-hero-search-input"
+          placeholder="Search..."
+          autocomplete="off"
+        />
         </div>
       </div>
   
@@ -92,11 +94,11 @@
         
                 @php
                     $adminPostCount = \App\Models\Post::where('parent_id', $subcategory->id)->count();
-                    $userPostCount  = \App\Models\UserPost::where('parent_id', $subcategory->id)->count();
+                    $userPostCount  = \App\Models\userpost::where('parent_id', $subcategory->id)->count();
                     $totalPostCount = $adminPostCount + $userPostCount;
         
                     $postIds = \App\Models\Post::where('parent_id', $subcategory->id)->pluck('id');
-                    $userPostIds = \App\Models\UserPost::where('parent_id', $subcategory->id)->pluck('id');
+                    $userPostIds = \App\Models\userpost::where('parent_id', $subcategory->id)->pluck('id');
         
                     $followerCount = \App\Models\Follower::whereIn(
                         'user_post_id',
@@ -104,7 +106,8 @@
                     )->count();
                 @endphp
         
-                <div class="current-radar-article-card">
+                <div class="current-radar-article-card" data-category="{{ strtolower($category->name) }}"
+                  data-subcategory="{{ strtolower($subcategory->name) }}">
         
                     <div class="current-radar-article-card-image-wrapper">
                         <img src="{{ asset($subcategory->thumb) }}" class="current-radar-article-card-image">
@@ -143,3 +146,37 @@
   </section>
 
 @endsection
+
+
+@push('script')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const searchInput = document.getElementById('forumSearchInput');
+    const cards = document.querySelectorAll('.current-radar-article-card');
+
+    searchInput.addEventListener('input', function () {
+
+        const value = this.value.toLowerCase().trim();
+
+        cards.forEach(card => {
+
+            const category = card.dataset.category || '';
+            const subcategory = card.dataset.subcategory || '';
+
+            if (
+                category.includes(value) ||
+                subcategory.includes(value)
+            ) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+
+        });
+
+    });
+
+});
+</script>
+@endpush

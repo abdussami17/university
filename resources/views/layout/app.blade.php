@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-
+    <link rel="icon" type="image/x-icon" href="{{asset('assets/Images/website.png')}}">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,7 +41,24 @@
   ════════════════════════════════════════ -->
 <!-- ProAI Coach Chat Popup -->
 <style>
-    .pcw-overlay{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+  .pcw-overlay {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+
+    pointer-events: none; /* 🔥 KEY FIX */
+}
+
+/* sirf clickable elements ko enable karo */
+.pcw-bubble,
+.pcw-popup {
+    pointer-events: auto;
+}
     .pcw-bubble{width:56px;height:56px;border-radius:50%;background:#5046e5;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:transform 0.2s,background 0.2s;box-shadow:0 4px 16px rgba(80,70,229,0.35);flex-shrink:0}
     .pcw-bubble:hover{background:#3d34c7;transform:scale(1.05)}
     .pcw-bubble svg{width:26px;height:26px}

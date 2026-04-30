@@ -82,7 +82,7 @@ $username = $lastCommentwe ? \App\Models\User::where('id', $lastCommentwe->user_
                     data-id="{{ $item->id }}"
                     data-toggle="modal"
                     data-target="#editModal">
-                {{ trans('general.Edit') ?? 'Edit' }}
+              Edit
             </button>
 
             <!-- DELETE -->
@@ -97,7 +97,7 @@ $username = $lastCommentwe ? \App\Models\User::where('id', $lastCommentwe->user_
                 <button type="button"
                         class="btn btn-sm btn-danger"
                         onclick="confirmDelete({{ $item->id }})">
-                    {{ trans('general.Delete') ?? 'Delete' }}
+                    Delete
                 </button>
 
             </form>

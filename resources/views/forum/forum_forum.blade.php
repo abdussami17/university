@@ -1,9 +1,26 @@
 @extends('layout.app')
 
 @section('title', trans('general.Forum_University_Community'))
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 @section('content')
-
+<style>
+    
+     .post-card__actions{
+        display: flex;
+        justify-content: end;
+        margin-top: 14px;
+        gap:10px;
+     }
+     .post-card__title a{
+        text-decoration: underline
+     }
+    .post-card {text-align: start}
+    .community__topbar {text-align: start}
+    .navbar__inner {width:100% }
+    p{
+        margin-bottom: unset
+    }
+</style>
 <style>
     /* BACKDROP FIX */
 .modal-backdrop.show {

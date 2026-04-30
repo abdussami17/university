@@ -12,11 +12,11 @@ class UserpostController extends Controller
        /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $post=userpost::where('parent_id',0)->get();
-        return view('user.post.index',compact('post'));
-    }
+    // public function index()
+    // {
+    //     $post=userpost::where('parent_id',0)->get();
+    //     return view('user.post.index',compact('post'));
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -124,17 +124,17 @@ class UserpostController extends Controller
         $delete = userpost::find($id);
 
         if (!$delete) {
-            return redirect()->route('account.post.index')->with('error', __('messages.post.not_found'));
+            return redirect()->back()->with('error', __('messages.post.not_found'));
         }
         if($delete->child->count()>0){
-            return redirect()->route('account.post.index')->with('error', __('messages.post.delete_sub_categy'));
+            return redirect()->back()->with('error', __('messages.post.delete_sub_categy'));
         }
             if ($delete->thumb && file_exists(public_path($delete->thumb))) {
                 unlink(public_path($delete->thumb));
             }
             $delete->delete();
 
-            return redirect()->route('account.post.index')->with('message', __('messages.post.deleted'));
+            return redirect()->back()->with('message', __('messages.post.deleted'));
 
 
     }

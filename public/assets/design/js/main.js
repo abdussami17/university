@@ -83,7 +83,7 @@
   }
 
   /* ── Scroll-based navbar shadow ── */
-  const navbar = document.querySelector('.navbar');
+  const navbar = document.querySelector('.navbars');
   if (navbar) {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 10) {
@@ -104,10 +104,7 @@
     });
   });
 
-  /* ── Read More link ── */
-  document.querySelectorAll('.read-more-link').forEach(link => {
-    link.addEventListener('click', (e) => e.preventDefault());
-  });
+
 
   lucide.createIcons();
 
